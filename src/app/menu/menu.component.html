@@ -1,0 +1,81 @@
+<div>
+  <div class="titulo">
+    <h2>Menu</h2>
+    <button mat-stroked-button color="warn" (click)="cambioEstadoPedido()">
+      Arma tu pedido
+    </button>
+  </div>
+  <form (submit)="onAddPedido(postForm)" #postForm="ngForm">
+    <div class="container">
+      <div class="row" *ngFor="let platillo of platillos">
+        <div class="col">
+          <mat-card>
+            <div class="row">
+              <div class="col-sm-2"></div>
+              <div class="col-sm-3">
+                <img
+                  [src]="platillo.imagen"
+                  class="rounded-circle"
+                  [alt]="platillo.nombre"
+                  width="180"
+                  height="150"
+                />
+              </div>
+              <div class="col-sm-4">
+                <div class="menu-content">
+                  <b>{{ platillo.nombre }}</b>
+                  <span>${{ platillo.precio }}</span>
+                </div>
+                <div class="menu-ingredients">{{ platillo.ingredientes }}</div>
+              </div>
+              <div class="col-sm-3">
+                <mat-checkbox
+                  class="example-margin"
+                  color="warn"
+                  *ngIf="pidiendo"
+                  (click)="seleccionPlatillo(platillo)"
+                  >Seleccionar
+                </mat-checkbox>
+              </div>
+            </div>
+          </mat-card>
+        </div>
+      </div>
+      <div class="row" *ngIf="pidiendo">
+        <mat-form-field>
+          <input
+            matInput
+            type="text"
+            name="nombre"
+            ngModel
+            required
+            #nombre="ngModel"
+            placeholder="Nombre"
+          />
+          <mat-error *ngIf="nombre.invalid"
+            >Por favor ingrese un nombre</mat-error
+          >
+        </mat-form-field>
+      </div>
+      <div class="row" *ngIf="pidiendo">
+        <mat-form-field>
+          <input
+            matInput
+            type="number"
+            name="mesa"
+            ngModel
+            required
+            #mesa="ngModel"
+            placeholder="No. de mesa"
+          />
+          <mat-error *ngIf="mesa.invalid"
+            >Por favor ingrese un numero de mesa</mat-error
+          >
+        </mat-form-field>
+      </div>
+      <button mat-raised-button color="warn" *ngIf="pidiendo" type="submit">
+        Pedir
+      </button>
+    </div>
+  </form>
+</div>

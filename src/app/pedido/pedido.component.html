@@ -1,0 +1,47 @@
+<div *ngIf="pedidos.length > 0">
+  <h1>Mis pedidos</h1>
+  <div class="container">
+    <div class="row" *ngFor="let pedido of pedidos">
+      <div class="row">
+        <h2><b>Nombre: </b>{{ pedido.cliente }}</h2>
+      </div>
+      <div class="row">
+        <h2><b>Mesa: </b>{{ pedido.mesa }}</h2>
+      </div>
+      <div class="row">
+        <div class="col-sm-3" *ngFor="let consumible of pedido.consumible">
+          <mat-card class="example-card">
+            <mat-card-header>
+              <div mat-card-avatar class="example-header-image"></div>
+              <mat-card-title>{{ consumible.nombre }}</mat-card-title>
+              <mat-card-subtitle>platillo</mat-card-subtitle>
+            </mat-card-header>
+            <img
+              mat-card-image
+              class="rounded-circle"
+              [src]="consumible.imagen"
+              [alt]="consumible.nombre"
+              height="200"
+            />
+            <mat-card-content>
+              <p>
+                {{ consumible.ingredientes }}
+              </p>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div>
+      <tr></tr>
+    </div>
+  </div>
+
+  <mat-accordion multi="true" *ngIf="pedidos.length > 0">
+    <mat-expansion-panel *ngFor="let pedido of pedidos">
+      <mat-expansion-panel-header>
+        {{ pedido.cliente }}
+      </mat-expansion-panel-header>
+      <h5>{{ pedido.mesa }}</h5>
+      <h5>{{ pedido.precioTotal }}</h5>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>

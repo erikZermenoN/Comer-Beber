@@ -1,5 +1,5 @@
 <div>
-  <div class="titulo">
+  <div id="titulo">
     <h2>Menu</h2>
     <button mat-stroked-button color="warn" (click)="cambioEstadoPedido()">
       Arma tu pedido
@@ -23,7 +23,8 @@
               </div>
               <div class="col-sm-4">
                 <div class="menu-content">
-                  <b>{{ platillo.nombre }}</b>
+                  <b>{{ platillo.nombre }}</b
+                  >-----------
                   <span>${{ platillo.precio }}</span>
                 </div>
                 <div class="menu-ingredients">{{ platillo.ingredientes }}</div>
@@ -34,6 +35,7 @@
                   color="warn"
                   *ngIf="pidiendo"
                   (click)="seleccionPlatillo(platillo)"
+                  [checked]="platillo.seleccionado"
                   >Seleccionar
                 </mat-checkbox>
               </div>
@@ -73,9 +75,11 @@
           >
         </mat-form-field>
       </div>
-      <button mat-raised-button color="warn" *ngIf="pidiendo" type="submit">
-        Pedir
-      </button>
+      <div id="boton">
+        <button mat-raised-button color="warn" *ngIf="pidiendo" type="submit">
+          Pedir
+        </button>
+      </div>
     </div>
   </form>
 </div>

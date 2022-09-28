@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Consumible } from '../modelos/consumible.model';
 import { PedidoService } from '../pedido/pedido.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-menu',
@@ -9,8 +10,9 @@ import { PedidoService } from '../pedido/pedido.service';
   styleUrls: ['./menu.component.css'],
 })
 export class MenuComponent {
-  pidiendo: boolean = false;
+  pidiendo: boolean = true;
   seleccion: Consumible[] = [];
+  precioTotal: number = 0;
 
   platillos: Consumible[] = [
     {
@@ -19,6 +21,7 @@ export class MenuComponent {
       imagen: '../../assets/img/platillos/chilaquiles-verdes.jpg',
       precio: 200,
       tipo: 'platillo',
+      seleccionado: false,
     },
     {
       nombre: 'Mole',
@@ -26,6 +29,7 @@ export class MenuComponent {
       imagen: '../../assets/img/platillos/mole.jpg',
       precio: 200,
       tipo: 'platillo',
+      seleccionado: false,
     },
     {
       nombre: 'Pozole',
@@ -37,6 +41,7 @@ export class MenuComponent {
       imagen: '../../assets/img/platillos/posole.jpg',
       precio: 120,
       tipo: 'platillo',
+      seleccionado: false,
     },
     {
       nombre: 'Ensalada de arroz',
@@ -50,6 +55,7 @@ export class MenuComponent {
       imagen: '../../assets/img/platillos/ensalada-de-arroz.jpg',
       precio: 120,
       tipo: 'platillo',
+      seleccionado: false,
     },
     {
       nombre: 'Chiles de Nogada',
@@ -66,6 +72,7 @@ export class MenuComponent {
       imagen: '../../assets/img/platillos/chiles-de-nogada.jpg',
       precio: 150,
       tipo: 'platillo',
+      seleccionado: false,
     },
     {
       nombre: 'Palitos de Queso Picantes',
@@ -73,6 +80,7 @@ export class MenuComponent {
       imagen: '../../assets/img/platillos/palitos-de-queso-picantes.jpg',
       precio: 200,
       tipo: 'platillo',
+      seleccionado: false,
     },
     {
       nombre: 'Camarones con Arroz al Curry y Salsa de Coco',
@@ -88,6 +96,7 @@ export class MenuComponent {
         '../../assets/img/platillos/camarones-con-arroz-al-curry-y-salsa-de-coco.jpg',
       precio: 300,
       tipo: 'platillo',
+      seleccionado: false,
     },
     {
       nombre: 'Club Sandwich',
@@ -104,6 +113,7 @@ export class MenuComponent {
       imagen: '../../assets/img/platillos/club-sandwich.jpg',
       precio: 140,
       tipo: 'platillo',
+      seleccionado: false,
     },
     {
       nombre: 'Alitas Blue Cheese',
@@ -117,6 +127,7 @@ export class MenuComponent {
       imagen: '../../assets/img/platillos/alitas-blue-cheese.jpg',
       precio: 200,
       tipo: 'platillo',
+      seleccionado: false,
     },
     {
       nombre: 'Dedos de queso Mozzarella',
@@ -124,6 +135,7 @@ export class MenuComponent {
       imagen: '../../assets/img/platillos/dedos-de-queso-mozzarella.jpg',
       precio: 200,
       tipo: 'platillo',
+      seleccionado: false,
     },
     {
       nombre: 'Agua de Horchata',
@@ -137,6 +149,7 @@ export class MenuComponent {
       imagen: '../../assets/img/bebidas/horchata.jpg',
       precio: 30,
       tipo: 'bebida',
+      seleccionado: false,
     },
     {
       nombre: 'Coca Cola',
@@ -144,6 +157,7 @@ export class MenuComponent {
       imagen: '../../assets/img/bebidas/coca-cola.jpg',
       precio: 30,
       tipo: 'bebida',
+      seleccionado: false,
     },
     {
       nombre: 'Cerveza',
@@ -151,6 +165,7 @@ export class MenuComponent {
       imagen: '../../assets/img/bebidas/cerveza.jpg',
       precio: 50,
       tipo: 'bebida',
+      seleccionado: false,
     },
     {
       nombre: 'Vino tinto',
@@ -158,6 +173,7 @@ export class MenuComponent {
       imagen: '../../assets/img/bebidas/vino-tinto.jpg',
       precio: 70,
       tipo: 'bebida',
+      seleccionado: false,
     },
     {
       nombre: 'Cafe Americano',
@@ -165,6 +181,7 @@ export class MenuComponent {
       imagen: '../../assets/img/bebidas/cafe-americano.jpg',
       precio: 30,
       tipo: 'bebida',
+      seleccionado: false,
     },
   ];
   constructor(public pedidosService: PedidoService) {}
@@ -176,13 +193,21 @@ export class MenuComponent {
       alert('Seleccione al menos un platillo o bebida');
       return;
     }
+    this.seleccion.forEach((element) => {
+      this.precioTotal += element.precio;
+    });
     this.pedidosService.addPedido(
       form.value.nombre,
       form.value.mesa,
       this.seleccion,
-      10
+      this.precioTotal
     );
-    console.log(form.value);
+    this.seleccion.forEach((element) => {
+      element.seleccionado = false;
+    });
+    this.precioTotal = 0;
+    moment.locale('es');
+    console.log(moment().format());
   }
 
   cambioEstadoPedido(): void {

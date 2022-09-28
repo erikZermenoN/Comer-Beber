@@ -1,0 +1,54 @@
+#inicio {
+  width: 100%;
+  height: 100vh;
+  background: url("../../assets/img/fondos/inicio-fondo.jpg") top center;
+  background-size: cover;
+  position: relative;
+  padding: 0;
+}
+
+#inicio .container {
+  padding-top: 110px;
+}
+
+@media (max-width: 992px) {
+  #inicio .container {
+    padding-top: 98px;
+  }
+}
+
+#inicio h1 {
+  margin: 0;
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 56px;
+  color: #fff;
+  font-family: "Poppins", sans-serif;
+}
+
+#inicio h1 span {
+  color: #f44336;
+}
+
+#inicio h2 {
+  color: #eee;
+  margin-bottom: 10px 0 0 0;
+  font-size: 22px;
+}
+
+@media (min-width: 1024px) {
+  #inicio {
+    background-attachment: fixed;
+  }
+}
+
+@media (max-height: 500px) {
+  #inicio {
+    height: auto;
+  }
+
+  #inicio .container {
+    padding-top: 130px;
+    padding-bottom: 60px;
+  }
+}

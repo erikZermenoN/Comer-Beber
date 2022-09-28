@@ -1,0 +1,48 @@
+.example-spacer {
+  flex: 1 1 auto;
+}
+
+#titulo {
+  padding-top: 1rem;
+  padding-left: 5rem;
+}
+
+#titulo h2 {
+  padding-top: 1rem;
+  padding-left: 1rem;
+  margin: 0;
+  font-size: 44px;
+  font-weight: 700;
+  line-height: 56px;
+  color: rgb(0, 0, 0);
+  font-family: "Poppins", sans-serif;
+}
+
+#titulo button {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 56px;
+  color: #f44336;
+  font-family: "Poppins", sans-serif;
+}
+
+input {
+  padding-top: 2rem;
+  font-size: 20px;
+  font-family: "Poppins", sans-serif;
+}
+
+#boton {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+#boton button {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 56px;
+  font-family: "Poppins", sans-serif;
+}

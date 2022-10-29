@@ -5,6 +5,7 @@ const mongoose = require("mongoose")
 const app = express();
 const postRoutes = require("./routes/posts");
 
+// mongoose.set('useCreateIndex', true)
 mongoose.connect('mongodb+srv://CoffeesAD:JoroAnDa2019@practica.nx7bwcj.mongodb.net/node-angularJRAD?retryWrites=true&w=majority')
 .then(() => {
   console.log('Base de Datos Conectada');

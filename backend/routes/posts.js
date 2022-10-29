@@ -55,7 +55,7 @@ router.delete("/:id", (req, res, next) => {
   Post.deleteOne({_id: req.params.id})
   .then(() => {
     res.status(200).json({
-      message: "Post deleted succesful",
+      message: "Post ",
     });
   })
   .catch(() => {

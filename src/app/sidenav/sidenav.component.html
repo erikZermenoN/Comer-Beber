@@ -1,0 +1,31 @@
+<mat-drawer-container hasBackdrop="true">
+  <mat-drawer #drawer mode="over">
+    <ul class="nav">
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/">
+          <i class="material-icons">home</i>
+          <p>Inicio</p>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/menu"
+          ><i class="material-icons">book</i>
+          <p>Menu</p>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/pedidos"
+          ><i class="material-icons">reorder</i>
+          <p>Mis pedidos</p>
+        </a>
+      </li>
+    </ul>
+  </mat-drawer>
+  <mat-drawer-content>
+    <app-header (desplegar)="desplegarMenu($event)"></app-header>
+    <main>
+      <router-outlet></router-outlet>
+    </main>
+    <app-footer></app-footer>
+  </mat-drawer-content>
+</mat-drawer-container>

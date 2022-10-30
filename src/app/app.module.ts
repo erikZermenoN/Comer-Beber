@@ -8,6 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
+import { MatSidenavModule } from '@angular/material/sidenav';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -18,6 +19,7 @@ import { PedidoComponent } from './pedido/pedido.component';
 import { PedidoService } from './pedido/pedido.service';
 import { InicioComponent } from './inicio/inicio.component';
 import { FooterComponent } from './footer/footer.component';
+import { SidenavComponent } from './sidenav/sidenav.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +29,7 @@ import { FooterComponent } from './footer/footer.component';
     PedidoComponent,
     InicioComponent,
     FooterComponent,
+    SidenavComponent,
   ],
   imports: [
     BrowserModule,
@@ -39,6 +42,7 @@ import { FooterComponent } from './footer/footer.component';
     MatInputModule,
     MatCheckboxModule,
     MatIconModule,
+    MatSidenavModule,
     BrowserAnimationsModule,
   ],
   providers: [PedidoService],

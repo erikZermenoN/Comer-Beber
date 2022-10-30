@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Consumible } from '../modelos/consumible.model';
+import { Consumible } from '../modelo/consumible.model';
 import { PedidoService } from '../pedido/pedido.service';
 import * as moment from 'moment';
 
@@ -10,7 +10,7 @@ import * as moment from 'moment';
   styleUrls: ['./menu.component.css'],
 })
 export class MenuComponent {
-  pidiendo: boolean = true;
+  pidiendo: boolean = false;
   seleccion: Consumible[] = [];
   precioTotal: number = 0;
 

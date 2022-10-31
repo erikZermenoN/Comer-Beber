@@ -3,9 +3,13 @@ const mongoose = require('mongoose');
 // Creacion del esquema de pedidos
 const pedidoSchema = mongoose.Schema({
     cliente: { type: String, require: true},
-    mesa: { type: String, require: true}, //Agregar el campo de unique{ type: String, unique:true , require: true} para que no repita la mesa en caso de ya estar registrada
+    fecha: { type: String, require: true},
     precioTotal: { type: Number, require: true},
-});
+}
+// {
+//     timestamps: true
+// }
+);
 
 // Creacion del esquema de consumibles
 const consumibleSchema = mongoose.Schema({
@@ -16,17 +20,22 @@ const consumibleSchema = mongoose.Schema({
     tipo: { type: String, require: true },
 });
 
-// Creacion del esquma sobre el detalle del pedido
+// Creacion del esquema sobre el detalle del pedido
 const detallePedidoSchema = mongoose.Schema({
     pedido: { type: mongoose.Types.ObjectId },
-    consumible: { type: mongoose.Types.ObjectId } 
-}
-// {
-//     timestamps: true
-// }
-);
+    consumible: { type: mongoose.Types.ObjectId },
+    precio: { type: Number, require: true },
+    cantidad: { type: Number, require: true },
+});
+
+// Creacion del esquema cliente
+const clienteSchema = mongoose.Schema({
+    nombre: { type: String, require: true},
+    mesa: { type: Number, require: true},
+});
 
 // Creacion del modelo Pedido, Consumible y DetallePedido
 module.exports = mongoose.model('Pedido', pedidoSchema);
 module.exports = mongoose.model('Consumible', consumibleSchema);
 module.exports = mongoose.model('DetallePedido', detallePedidoSchema);
+module.exports = mongoose.model('Cliente', clienteSchema);

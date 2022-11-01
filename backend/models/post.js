@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 // Creacion del esquema de pedidos
 const pedidoSchema = mongoose.Schema({
-    cliente: { type: String, require: true},
+    idCliente: { type: mongoose.Types.ObjectId },
     fecha: { type: String, require: true},
     precioTotal: { type: Number, require: true},
 }
@@ -22,8 +22,8 @@ const consumibleSchema = mongoose.Schema({
 
 // Creacion del esquema sobre el detalle del pedido
 const detallePedidoSchema = mongoose.Schema({
-    pedido: { type: mongoose.Types.ObjectId },
-    consumible: { type: mongoose.Types.ObjectId },
+    idPedido: { type: mongoose.Types.ObjectId },
+    idConsumible: { type: mongoose.Types.ObjectId },
     precio: { type: Number, require: true },
     cantidad: { type: Number, require: true },
 });
@@ -32,6 +32,7 @@ const detallePedidoSchema = mongoose.Schema({
 const clienteSchema = mongoose.Schema({
     nombre: { type: String, require: true},
     mesa: { type: Number, require: true},
+    fecha: { type: String, require: true},
 });
 
 // Creacion del modelo Pedido, Consumible y DetallePedido

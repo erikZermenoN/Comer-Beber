@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { Pedido } from '../modelo/pedido.model';
-import { Consumible } from '../modelo/consumible.model';
+import { Pedido } from '../modelos/pedido.model';
+import { Consumible } from '../modelos/consumible.model';
 
 @Injectable({ providedIn: 'root' })
 export class PedidoService {

@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { Consumible } from '../modelo/consumible.model';
+import { Consumible } from '../modelos/consumible.model';
 import { PedidoService } from '../pedido/pedido.service';
 import * as moment from 'moment';
 import { FormClienteComponent } from '../formCliente/formCliente.component';
-import { Cliente } from '../modelo/cliente.model';
+import { Cliente } from '../modelos/cliente.model';
+import { MenuService } from './menu.service';
 
 @Component({
   selector: 'app-menu',
@@ -189,7 +190,11 @@ export class MenuComponent {
       seleccionado: false,
     },
   ];
-  constructor(public pedidosService: PedidoService, public dialog: MatDialog) {}
+  constructor(
+    public pedidosService: PedidoService,
+    public menuService: MenuService,
+    public dialog: MatDialog
+  ) {}
 
   onAddPedido(form: NgForm) {
     if (form.invalid) {
@@ -216,25 +221,51 @@ export class MenuComponent {
   }
 
   cambioEstadoPedido(): void {
-    if (this.pidiendo === false) {
-      this.pidiendo = true;
-    } else {
-      this.pidiendo = false;
-    }
+    //Obtenemos el id del cliente almacenado en el navegador
     let idCliente = localStorage.getItem('idCliente');
-    //localStorage.removeItem('idCliente');
-    if (!idCliente) {
+
+    if (idCliente) {
+      // Si existe el id...
+      this.menuService.getCliente(idCliente).subscribe((result) => {
+        // Obtenemos todos los datos de ese cliente
+        if (moment(result.fecha).add(3, 'hours').format() > moment().format()) {
+          // Si aun no pasan 3 horas puede crear pedidos
+          if (this.pidiendo === false) {
+            this.pidiendo = true;
+          } else {
+            this.pidiendo = false;
+          }
+        } else {
+          // Si pasa de 3 horas se remueve el id del navegador
+          localStorage.removeItem('idCliente');
+        }
+      });
+    } else {
+      // Si no existe el id...
       const dialogRef = this.dialog.open(FormClienteComponent, {
+        // Abrmimos la ventana emergente
         width: '500px',
         data: { nombre: '', mesa: '' },
       });
 
       dialogRef.afterClosed().subscribe((result) => {
+        // Despues de cerrarse...
         console.log('The dialog was closed');
         if (result) {
           this.nombre = result.nombre;
           this.mesa = result.mesa;
-          localStorage.setItem('idCliente', JSON.stringify(1));
+          this.menuService.addCliente(
+            // Registramos el cliente
+            this.nombre,
+            this.mesa,
+            moment().format()
+          );
+
+          if (this.pidiendo === false) {
+            this.pidiendo = true;
+          } else {
+            this.pidiendo = false;
+          }
         }
       });
     }

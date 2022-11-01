@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Pedido } from '../modelo/pedido.model';
+import { Pedido } from '../modelos/pedido.model';
 import { PedidoService } from './pedido.service';
 import { Subscription } from 'rxjs';
 

@@ -10,6 +10,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatDialogModule } from '@angular/material/dialog';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -48,6 +49,7 @@ import { FormClienteComponent } from './formCliente/formCliente.component';
     MatSidenavModule,
     MatDialogModule,
     BrowserAnimationsModule,
+    HttpClientModule,
   ],
   providers: [PedidoService],
   bootstrap: [AppComponent],

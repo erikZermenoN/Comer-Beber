@@ -33,5 +33,22 @@
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onNoClick()">No gracias</button>
-  <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Guardar</button>
+  <button
+    *ngIf="mesa.invalid || nombre.invalid"
+    mat-button
+    [mat-dialog-close]="data"
+    cdkFocusInitial
+    disabled="true"
+  >
+    Guardar
+  </button>
+  <button
+    *ngIf="!mesa.invalid && !nombre.invalid"
+    mat-button
+    [mat-dialog-close]="data"
+    cdkFocusInitial
+    disabled="false"
+  >
+    Guardar
+  </button>
 </div>

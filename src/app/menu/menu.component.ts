@@ -1,8 +1,11 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { Consumible } from '../modelo/consumible.model';
 import { PedidoService } from '../pedido/pedido.service';
 import * as moment from 'moment';
+import { FormClienteComponent } from '../formCliente/formCliente.component';
+import { Cliente } from '../modelo/cliente.model';
 
 @Component({
   selector: 'app-menu',
@@ -13,6 +16,8 @@ export class MenuComponent {
   pidiendo: boolean = false;
   seleccion: Consumible[] = [];
   precioTotal: number = 0;
+  nombre: string = '';
+  mesa: number = 0;
 
   platillos: Consumible[] = [
     {
@@ -184,7 +189,7 @@ export class MenuComponent {
       seleccionado: false,
     },
   ];
-  constructor(public pedidosService: PedidoService) {}
+  constructor(public pedidosService: PedidoService, public dialog: MatDialog) {}
 
   onAddPedido(form: NgForm) {
     if (form.invalid) {
@@ -215,6 +220,23 @@ export class MenuComponent {
       this.pidiendo = true;
     } else {
       this.pidiendo = false;
+    }
+    let idCliente = localStorage.getItem('idCliente');
+    //localStorage.removeItem('idCliente');
+    if (!idCliente) {
+      const dialogRef = this.dialog.open(FormClienteComponent, {
+        width: '500px',
+        data: { nombre: '', mesa: '' },
+      });
+
+      dialogRef.afterClosed().subscribe((result) => {
+        console.log('The dialog was closed');
+        if (result) {
+          this.nombre = result.nombre;
+          this.mesa = result.mesa;
+          localStorage.setItem('idCliente', JSON.stringify(1));
+        }
+      });
     }
   }
 

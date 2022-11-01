@@ -10,6 +10,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatTabsModule } from '@angular/material/tabs';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -48,6 +49,7 @@ import { FormClienteComponent } from './formCliente/formCliente.component';
     MatIconModule,
     MatSidenavModule,
     MatDialogModule,
+    MatTabsModule,
     BrowserAnimationsModule,
     HttpClientModule,
   ],

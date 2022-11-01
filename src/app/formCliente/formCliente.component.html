@@ -1,0 +1,37 @@
+<h1 mat-dialog-title>Ingresa tu datos</h1>
+<div mat-dialog-content>
+  <div class="row">
+    <mat-form-field>
+      <input
+        matInput
+        type="text"
+        name="nombre"
+        [(ngModel)]="data.nombre"
+        required
+        #nombre="ngModel"
+        placeholder="Nombre"
+      />
+      <mat-error *ngIf="nombre.invalid">Por favor ingrese un nombre</mat-error>
+    </mat-form-field>
+  </div>
+  <div class="row">
+    <mat-form-field>
+      <input
+        matInput
+        type="number"
+        name="mesa"
+        [(ngModel)]="data.mesa"
+        required
+        #mesa="ngModel"
+        placeholder="No. de mesa"
+      />
+      <mat-error *ngIf="mesa.invalid"
+        >Por favor ingrese un numero de mesa</mat-error
+      >
+    </mat-form-field>
+  </div>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">No gracias</button>
+  <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Guardar</button>
+</div>

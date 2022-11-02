@@ -11,6 +11,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatListModule } from '@angular/material/list';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -50,6 +51,7 @@ import { FormClienteComponent } from './formCliente/formCliente.component';
     MatSidenavModule,
     MatDialogModule,
     MatTabsModule,
+    MatListModule,
     BrowserAnimationsModule,
     HttpClientModule,
   ],

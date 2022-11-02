@@ -7,6 +7,7 @@ const app = express();
 const clienteRoutes = require("./routes/clientes");
 const pedidoRoutes = require("./routes/pedidos");
 const consumibleRoutes = require("./routes/consumibles");
+const detaPediRoutes = require("./routes/detallePedidos");
 
 // mongoose.set('useCreateIndex', true)
 mongoose
@@ -41,5 +42,6 @@ app.use((req, res, next) => {
 app.use("/api.clientes", clienteRoutes);
 app.use("/api.pedidos", pedidoRoutes);
 app.use("/api.consumibles", consumibleRoutes);
+app.use("/api.detallePedidos", detaPediRoutes);
 
 module.exports = app;

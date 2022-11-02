@@ -6,13 +6,14 @@ const router = express.Router();
 
 router.post("", (req, res, next) => {
   const pedido = new Pedido({
+    idCliente: req.body.idCliente,
     fecha: req.body.fecha,
     precioTotal: req.body.precioTotal,
   });
   pedido.save().then((createdOrder) => {
     res.status(201).json({
       message: "Pedido agregado correctamente",
-      postId: createdOrder._id,
+      idPedido: createdOrder._id,
     });
   });
 });

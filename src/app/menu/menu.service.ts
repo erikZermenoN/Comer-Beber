@@ -4,6 +4,7 @@ import { map, Subject } from 'rxjs';
 import { Cliente } from '../modelos/cliente.model';
 import { Pedido } from '../modelos/pedido.model';
 import { Consumible } from '../modelos/consumible.model';
+import { SeleccionConsumible } from '../modelos/seleccionConsumible.model';
 
 const baseURL: string = 'http://localhost:3000/';
 
@@ -28,20 +29,38 @@ export class MenuService {
   }
 
   addPedido(fecha: string, precioTotal: number) {
-    const pedido: Pedido = { fecha: fecha, precioTotal: precioTotal };
-    this.http
-      .post<{ message: string; idPedido: string }>(
-        `${baseURL}api.pedidos`,
-        pedido
-      )
-      .subscribe((responseData) => {
-        console.log(responseData.message);
-      });
+    const idCliente: string = localStorage.getItem('idCliente') || '';
+    const pedido: Pedido = {
+      idCliente: idCliente,
+      fecha: fecha,
+      precioTotal: precioTotal,
+    };
+    return this.http.post<{ message: string; idPedido: string }>(
+      `${baseURL}api.pedidos`,
+      pedido
+    );
   }
 
   getConsumibles() {
     return this.http.get<{ message: string; consumibles: Consumible[] }>(
       `${baseURL}api.consumibles`
     );
+  }
+
+  addDetallePedido(seleccion: SeleccionConsumible, idPedido: string) {
+    const seleccionConsumible: SeleccionConsumible = {
+      idPedido: idPedido,
+      idConsumible: seleccion.idConsumible,
+      cantidad: seleccion.cantidad,
+      precio: seleccion.precio,
+    };
+    this.http
+      .post<{ message: string; idDetallePedido: string }>(
+        `${baseURL}api.detallePedidos`,
+        seleccionConsumible
+      )
+      .subscribe((responseData) => {
+        console.log(responseData.message);
+      });
   }
 }

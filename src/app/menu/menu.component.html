@@ -8,7 +8,7 @@
   <mat-tab-group class="mat-tab-group" mat-align-tabs="center">
     <!-- APARTADO DE DESAYUNO -->
     <mat-tab label="Desayuno">
-      <form (submit)="onAddPedido(postForm)" #postForm="ngForm">
+      <form (submit)="onAddPedido()" #postForm="ngForm">
         <div class="container">
           <mat-spinner *ngIf="consumibles.length <= 0"></mat-spinner>
           <div class="row" *ngFor="let consumible of consumibles">
@@ -72,7 +72,7 @@
 
     <!-- APARTADO DE COMIDA -->
     <mat-tab label="Comida">
-      <form (submit)="onAddPedido(postForm)" #postForm="ngForm">
+      <form (submit)="onAddPedido()" #postForm="ngForm">
         <div class="container">
           <div class="row" *ngFor="let consumible of consumibles">
             <div *ngIf="consumible.tipo === 'comida'">
@@ -135,7 +135,7 @@
 
     <!-- APARTADO DE CENA -->
     <mat-tab label="Cena">
-      <form (submit)="onAddPedido(postForm)" #postForm="ngForm">
+      <form (submit)="onAddPedido()" #postForm="ngForm">
         <div class="container">
           <div class="row" *ngFor="let consumible of consumibles">
             <div *ngIf="consumible.tipo === 'cena'">
@@ -198,7 +198,7 @@
 
     <!-- APARTADO DE BEBIDAS -->
     <mat-tab label="Bebidas">
-      <form (submit)="onAddPedido(postForm)" #postForm="ngForm">
+      <form (submit)="onAddPedido()" #postForm="ngForm">
         <div class="container">
           <div class="row" *ngFor="let consumible of consumibles">
             <div *ngIf="consumible.tipo === 'bebida'">

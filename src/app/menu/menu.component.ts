@@ -30,6 +30,7 @@ export class MenuComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    moment.locale('es');
     this.loadMenu();
   }
 
@@ -57,28 +58,26 @@ export class MenuComponent implements OnInit {
       });
   }
 
-  onAddPedido(form: NgForm) {
+  onAddPedido() {
     // if (form.invalid) {
     //   return;
-    // } else if (this.seleccion.length <= 0) {
-    //   alert('Seleccione al menos un platillo o bebida');
-    //   return;
-    // }
-    // this.seleccion.forEach((element) => {
-    //   this.precioTotal += element.precio;
-    // });
-    // // this.pedidosService.addPedido(
-    // //   form.value.nombre,
-    // //   form.value.mesa,
-    // //   this.seleccion,
-    // //   this.precioTotal
-    // // );
-    // this.seleccion.forEach((element) => {
-    //   element.seleccionado = false;
-    // });
-    // this.precioTotal = 0;
-    // moment.locale('es');
-    // console.log(moment().format());
+    // } else
+    if (this.seleccion.length <= 0) {
+      alert('Seleccione al menos un platillo o bebida');
+      return;
+    }
+    this.seleccion.forEach((element) => {
+      this.precioTotal += element.precio;
+    });
+    this.menuService
+      .addPedido(moment().format(), this.precioTotal)
+      .subscribe((result) => {
+        this.seleccion.forEach((element) => {
+          this.menuService.addDetallePedido(element, result.idPedido);
+        });
+        this.seleccion = [];
+      });
+    this.precioTotal = 0;
   }
 
   cambioEstadoPedido(): void {

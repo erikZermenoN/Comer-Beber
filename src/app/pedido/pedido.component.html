@@ -1,13 +1,13 @@
-<!-- <div *ngIf="pedidos.length > 0" id="pedidos">
+<div *ngIf="pedidos.length > 0" id="pedidos">
   <h1>Mis pedidos</h1>
   <div class="container">
     <div class="row" *ngFor="let pedido of pedidos">
       <div class="row" id="encabezadoPedido">
         <div class="col">
-          <h2><b>Nombre: </b>{{ pedido.cliente }}</h2>
+          <h2><b>Nombre: </b>{{ cliente.nombre }}</h2>
         </div>
         <div class="col">
-          <h2><b>No. mesa: </b>{{ pedido.mesa }}</h2>
+          <h2><b>No. mesa: </b>{{ cliente.mesa }}</h2>
         </div>
         <div class="col">
           <h2><b>Total: </b>${{ pedido.precioTotal }}</h2>
@@ -15,7 +15,7 @@
       </div>
       <div class="row">
         <div class="row">
-          <div class="col-sm-3" *ngFor="let consumible of pedido.consumible">
+          <div class="col-sm-3" *ngFor="let consumible of consumibles">
             <mat-card class="example-card">
               <mat-card-header>
                 <mat-card-title>{{ consumible.nombre }}</mat-card-title>
@@ -43,4 +43,4 @@
       </div>
     </div>
   </div>
-</div> -->
+</div>

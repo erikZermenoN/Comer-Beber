@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { map } from 'rxjs';
+import * as moment from 'moment';
+
 import { Consumible } from '../modelos/consumible.model';
 import { PedidoService } from '../pedido/pedido.service';
-import * as moment from 'moment';
 import { FormClienteComponent } from '../formCliente/formCliente.component';
-import { Cliente } from '../modelos/cliente.model';
 import { MenuService } from './menu.service';
-import { map } from 'rxjs';
+import { SeleccionConsumible } from '../modelos/seleccionConsumible.model';
 
 @Component({
   selector: 'app-menu',
@@ -16,7 +17,7 @@ import { map } from 'rxjs';
 })
 export class MenuComponent implements OnInit {
   pidiendo: boolean = false;
-  seleccion: Consumible[] = [];
+  seleccion: SeleccionConsumible[] = [];
   precioTotal: number = 0;
   nombre: string = '';
   mesa: number = 0;
@@ -57,27 +58,27 @@ export class MenuComponent implements OnInit {
   }
 
   onAddPedido(form: NgForm) {
-    if (form.invalid) {
-      return;
-    } else if (this.seleccion.length <= 0) {
-      alert('Seleccione al menos un platillo o bebida');
-      return;
-    }
-    this.seleccion.forEach((element) => {
-      this.precioTotal += element.precio;
-    });
-    // this.pedidosService.addPedido(
-    //   form.value.nombre,
-    //   form.value.mesa,
-    //   this.seleccion,
-    //   this.precioTotal
-    // );
-    this.seleccion.forEach((element) => {
-      element.seleccionado = false;
-    });
-    this.precioTotal = 0;
-    moment.locale('es');
-    console.log(moment().format());
+    // if (form.invalid) {
+    //   return;
+    // } else if (this.seleccion.length <= 0) {
+    //   alert('Seleccione al menos un platillo o bebida');
+    //   return;
+    // }
+    // this.seleccion.forEach((element) => {
+    //   this.precioTotal += element.precio;
+    // });
+    // // this.pedidosService.addPedido(
+    // //   form.value.nombre,
+    // //   form.value.mesa,
+    // //   this.seleccion,
+    // //   this.precioTotal
+    // // );
+    // this.seleccion.forEach((element) => {
+    //   element.seleccionado = false;
+    // });
+    // this.precioTotal = 0;
+    // moment.locale('es');
+    // console.log(moment().format());
   }
 
   cambioEstadoPedido(): void {
@@ -131,21 +132,36 @@ export class MenuComponent implements OnInit {
     }
   }
 
-  seleccionConsumible(idConsumible: string, cantidad: string): void {
-    // let validado: boolean = true;
-    // this.seleccion.forEach((element) => {
-    //   if (element === consumible) {
-    //     validado = false;
-    //     if (!validado) {
-    //       this.seleccion = this.seleccion.filter((item) => item !== consumible);
-    //       return;
-    //     }
-    //   }
-    // });
-    // if (validado) {
-    //   this.seleccion.push(consumible);
-    // }
-    console.log(idConsumible, ' ', cantidad);
-    console.log(parseInt(cantidad));
+  seleccionConsumible(consumible: Consumible, cantidad: string): void {
+    let validado: boolean = true;
+    const cantidadConsumible: number = parseInt(cantidad);
+    this.seleccion.forEach((element) => {
+      if (element.idConsumible === consumible._id) {
+        validado = false;
+        if (!validado) {
+          this.seleccion = this.seleccion.filter(
+            (item) => item.idConsumible !== consumible._id
+          );
+          if (cantidadConsumible > 0) {
+            const seleccionConsumible: SeleccionConsumible = {
+              idConsumible: consumible._id,
+              cantidad: parseInt(cantidad),
+              precio: consumible.precio * cantidadConsumible,
+            };
+            this.seleccion.push(seleccionConsumible);
+          }
+          return;
+        }
+      }
+    });
+    if (validado) {
+      const seleccionConsumible: SeleccionConsumible = {
+        idConsumible: consumible._id,
+        cantidad: parseInt(cantidad),
+        precio: consumible.precio * cantidadConsumible,
+      };
+      this.seleccion.push(seleccionConsumible);
+    }
+    console.log(this.seleccion);
   }
 }

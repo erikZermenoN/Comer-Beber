@@ -6,7 +6,6 @@
     </button>
   </div>
   <mat-tab-group class="mat-tab-group" mat-align-tabs="center">
-
     <!-- APARTADO DE DESAYUNO -->
     <mat-tab label="Desayuno">
       <form (submit)="onAddPedido(postForm)" #postForm="ngForm">
@@ -47,7 +46,7 @@
                           class="form-control"
                           #cantidad
                           (change)="
-                            seleccionConsumible(consumible._id, cantidad.value)
+                            seleccionConsumible(consumible, cantidad.value)
                           "
                         />
                       </mat-form-field>
@@ -110,7 +109,7 @@
                           class="form-control"
                           #cantidad
                           (change)="
-                            seleccionConsumible(consumible._id, cantidad.value)
+                            seleccionConsumible(consumible, cantidad.value)
                           "
                         />
                       </mat-form-field>

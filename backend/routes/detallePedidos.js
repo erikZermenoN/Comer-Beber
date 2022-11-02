@@ -65,8 +65,8 @@ router.get("/pedido/:id", (req, res, next) => {
   });
 });
 
-router.delete("/:id", (req, res, next) => {
-  DetallePedido.deleteOne({ _id: req.params.id })
+router.delete("/pedido/:id", (req, res, next) => {
+  DetallePedido.deleteMany({ idPedido: req.params.id })
     .then(() => {
       res.status(200).json({
         message: "DetallePedido eliminado correctamente",

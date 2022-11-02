@@ -12,10 +12,22 @@
         <div class="col">
           <h2><b>Total: </b>${{ pedido.precioTotal }}</h2>
         </div>
+        <div class="col">
+          <h2>
+            <a mat-button color="primary" [routerLink]="['/edit', pedido._id]">
+              EDITAR
+            </a>
+          </h2>
+        </div>
+        <div class="col">
+          <button mat-button color="warn" (click)="onDelete(pedido._id)">
+            ELIMINAR
+          </button>
+        </div>
       </div>
       <div class="row">
         <div class="row">
-          <div class="col-sm-3" *ngFor="let consumible of consumibles">
+          <div class="col-sm-3" *ngFor="let consumible of pedido.consumibles">
             <mat-card class="example-card">
               <mat-card-header>
                 <mat-card-title>{{ consumible.nombre }}</mat-card-title>
@@ -41,11 +53,16 @@
         </div>
         <tr></tr>
       </div>
+      <!-- botones [routerLink]="['/edit', post.id]" (click)="onDelete(post.id) -->
+      <!-- <mat-action-row>
+        <a mat-button color="primary"> EDITAR </a>
+        <button mat-button color="warn">ELIMINAR</button>
+      </mat-action-row> -->
     </div>
   </div>
 </div>
-
-<section>
+<mat-spinner *ngIf="pedidos.length <= 0" class="center"></mat-spinner>
+<section *ngIf="pedidos.length <= 0">
   <div class="text-center">
     <h1>Bienvenido a <span>Comer & Beber</span></h1>
     <br />

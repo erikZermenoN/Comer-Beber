@@ -41,6 +41,16 @@ export class MenuService {
     );
   }
 
+  updatePedido(idPedido: string, fecha: string, precioTotal: number) {
+    const idCliente: string = localStorage.getItem('idCliente') || '';
+    const pedido: Pedido = {
+      idCliente: idCliente,
+      fecha: fecha,
+      precioTotal: precioTotal,
+    };
+    return this.http.put(`${baseURL}api.pedidos/${idPedido}`, pedido);
+  }
+
   getConsumibles() {
     return this.http.get<{ message: string; consumibles: Consumible[] }>(
       `${baseURL}api.consumibles`
@@ -61,6 +71,29 @@ export class MenuService {
       )
       .subscribe((responseData) => {
         console.log(responseData.message);
+      });
+  }
+
+  getDetallePedidosByPedido(idPedido: any) {
+    return this.http.get<{
+      message: string;
+      detallePedidos: SeleccionConsumible[];
+    }>(`${baseURL}api.detallePedidos/pedido/${idPedido}`);
+  }
+
+  getConsumible(idConsumible: any) {
+    return this.http.get<Consumible>(
+      `${baseURL}api.consumibles/${idConsumible}`
+    );
+  }
+
+  deleteDetallesPedido(idPedido: string) {
+    this.http
+      .delete<{ message: string }>(
+        `${baseURL}api.detallePedidos/pedido/${idPedido}`
+      )
+      .subscribe(() => {
+        alert('Pedido eliminado con exito');
       });
   }
 }

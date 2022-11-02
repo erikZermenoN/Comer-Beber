@@ -9,6 +9,7 @@ import { PedidoService } from '../pedido/pedido.service';
 import { FormClienteComponent } from '../formCliente/formCliente.component';
 import { MenuService } from './menu.service';
 import { SeleccionConsumible } from '../modelos/seleccionConsumible.model';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 
 @Component({
   selector: 'app-menu',
@@ -16,8 +17,11 @@ import { SeleccionConsumible } from '../modelos/seleccionConsumible.model';
   styleUrls: ['./menu.component.css'],
 })
 export class MenuComponent implements OnInit {
+  private mode = 'create';
+  private idPedido: string = '';
   pidiendo: boolean = false;
   seleccion: SeleccionConsumible[] = [];
+  seleccionEdit: SeleccionConsumible[] = [];
   precioTotal: number = 0;
   nombre: string = '';
   mesa: number = 0;
@@ -26,12 +30,39 @@ export class MenuComponent implements OnInit {
   constructor(
     public pedidosService: PedidoService,
     public menuService: MenuService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    public route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
     moment.locale('es');
     this.loadMenu();
+    this.route.paramMap.subscribe((paramMap: ParamMap) => {
+      if (paramMap.has('id')) {
+        this.mode = 'edit';
+        this.idPedido = paramMap.get('id') || '';
+        this.seleccion = this.seleccionEdit;
+        this.menuService
+          .getDetallePedidosByPedido(this.idPedido)
+          .subscribe((pedido) => {
+            this.seleccionEdit = pedido.detallePedidos;
+            this.pidiendo = true;
+            this.consumibles.forEach((consumible) => {
+              this.seleccionEdit.forEach((item) => {
+                if (consumible._id === item.idConsumible) {
+                  console.log(consumible._id, item.idConsumible);
+                  consumible.cantidad = item.cantidad;
+                  console.log(consumible.cantidad);
+                }
+              });
+            });
+            console.log(this.consumibles);
+          });
+      } else {
+        this.mode = 'create';
+        this.idPedido = '';
+      }
+    });
   }
 
   loadMenu(): void {
@@ -66,17 +97,33 @@ export class MenuComponent implements OnInit {
       alert('Seleccione al menos un platillo o bebida');
       return;
     }
+    this.precioTotal = 0;
     this.seleccion.forEach((element) => {
       this.precioTotal += element.precio;
     });
-    this.menuService
-      .addPedido(moment().format(), this.precioTotal)
-      .subscribe((result) => {
-        this.seleccion.forEach((element) => {
-          this.menuService.addDetallePedido(element, result.idPedido);
+    if (this.mode === 'create') {
+      this.menuService
+        .addPedido(moment().format(), this.precioTotal)
+        .subscribe((result) => {
+          this.seleccion.forEach((element) => {
+            this.menuService.addDetallePedido(element, result.idPedido);
+            alert('Pedido agregado con exito');
+          });
+          this.seleccion = [];
         });
-        this.seleccion = [];
-      });
+    } else {
+      this.menuService
+        .updatePedido(this.idPedido, moment().format(), this.precioTotal)
+        .subscribe(() => {
+          this.menuService.deleteDetallesPedido(this.idPedido);
+
+          this.seleccion.forEach((element) => {
+            this.menuService.addDetallePedido(element, this.idPedido);
+            alert('Pedido actualizado con exito');
+          });
+          this.seleccion = [];
+        });
+    }
     this.precioTotal = 0;
   }
 

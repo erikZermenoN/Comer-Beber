@@ -20,7 +20,8 @@ router.post("", (req, res, next) => {
 
 router.put("/:id", (req, res, next) => {
   const pedido = new Pedido({
-    _id: req.body.id,
+    _id: req.params.id,
+    idCliente: req.body.idCliente,
     fecha: req.body.fecha,
     precioTotal: req.body.precioTotal,
   });
@@ -41,15 +42,15 @@ router.get("/cliente/:id", (req, res, next) => {
   });
 });
 
-router.get("/:id", (req, res, next) => {
-  Pedido.findById(req.params.id).then((pedido) => {
-    if (pedido) {
-      res.status(200).json(pedido);
-    } else {
-      res.status(404).json({ message: "Pedido no encontrado" });
-    }
-  });
-});
+// router.get("/:id", (req, res, next) => {
+//   Pedido.findById(req.params.id).then((pedido) => {
+//     if (pedido) {
+//       res.status(200).json(pedido);
+//     } else {
+//       res.status(404).json({ message: "Pedido no encontrado" });
+//     }
+//   });
+// });
 
 router.delete("/:id", (req, res, next) => {
   Pedido.deleteOne({ _id: req.params.id })

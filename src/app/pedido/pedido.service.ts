@@ -38,4 +38,12 @@ export class PedidoService {
       `${baseURL}api.consumibles/${idConsumible}`
     );
   }
+
+  deletePedido(idPedido: string) {
+    this.http
+      .delete<{ message: string }>(`${baseURL}api.pedidos/${idPedido}`)
+      .subscribe(() => {
+        alert('Pedido eliminado con exito');
+      });
+  }
 }

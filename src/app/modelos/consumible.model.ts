@@ -5,5 +5,5 @@ export interface Consumible {
   imagen: string;
   precio: number;
   tipo: string;
-  seleccionado?: boolean;
+  cantidad?: number;
 }

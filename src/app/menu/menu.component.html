@@ -28,7 +28,7 @@
                     </div>
                     <div class="col-sm-4">
                       <div class="menu-content">
-                        <b>{{ consumible.nombre }}</b>    ----------->
+                        <b>{{ consumible.nombre }}</b> ----------->
                         <span>${{ consumible.precio }}</span>
                       </div>
                       <div class="menu-ingredients">
@@ -39,10 +39,24 @@
                       <mat-form-field appearance="fill">
                         <input
                           matInput
+                          *ngIf="!consumible.cantidad"
                           type="number"
                           min="0"
                           max="5"
                           value="0"
+                          class="form-control"
+                          #cantidad
+                          (change)="
+                            seleccionConsumible(consumible, cantidad.value)
+                          "
+                        />
+                        <input
+                          matInput
+                          *ngIf="consumible.cantidad"
+                          type="number"
+                          min="0"
+                          max="5"
+                          [value]="consumible.cantidad"
                           class="form-control"
                           #cantidad
                           (change)="
@@ -91,7 +105,7 @@
                     </div>
                     <div class="col-sm-4">
                       <div class="menu-content">
-                        <b>{{ consumible.nombre }}</b>    ----------->
+                        <b>{{ consumible.nombre }}</b> ----------->
                         <span>${{ consumible.precio }}</span>
                       </div>
                       <div class="menu-ingredients">
@@ -102,10 +116,24 @@
                       <mat-form-field appearance="fill">
                         <input
                           matInput
+                          *ngIf="!consumible.cantidad"
                           type="number"
                           min="0"
                           max="5"
                           value="0"
+                          class="form-control"
+                          #cantidad
+                          (change)="
+                            seleccionConsumible(consumible, cantidad.value)
+                          "
+                        />
+                        <input
+                          matInput
+                          *ngIf="consumible.cantidad"
+                          type="number"
+                          min="0"
+                          max="5"
+                          [value]="consumible.cantidad"
                           class="form-control"
                           #cantidad
                           (change)="
@@ -154,7 +182,7 @@
                     </div>
                     <div class="col-sm-4">
                       <div class="menu-content">
-                        <b>{{ consumible.nombre }}</b>    ----------->
+                        <b>{{ consumible.nombre }}</b> ----------->
                         <span>${{ consumible.precio }}</span>
                       </div>
                       <div class="menu-ingredients">
@@ -165,10 +193,24 @@
                       <mat-form-field appearance="fill">
                         <input
                           matInput
+                          *ngIf="!consumible.cantidad"
                           type="number"
                           min="0"
                           max="5"
                           value="0"
+                          class="form-control"
+                          #cantidad
+                          (change)="
+                            seleccionConsumible(consumible, cantidad.value)
+                          "
+                        />
+                        <input
+                          matInput
+                          *ngIf="consumible.cantidad"
+                          type="number"
+                          min="0"
+                          max="5"
+                          [value]="consumible.cantidad"
                           class="form-control"
                           #cantidad
                           (change)="
@@ -217,7 +259,7 @@
                     </div>
                     <div class="col-sm-4">
                       <div class="menu-content">
-                        <b>{{ consumible.nombre }}</b>    ----------->
+                        <b>{{ consumible.nombre }}</b> ----------->
                         <span>${{ consumible.precio }}</span>
                       </div>
                       <div class="menu-ingredients">
@@ -228,10 +270,24 @@
                       <mat-form-field appearance="fill">
                         <input
                           matInput
+                          *ngIf="!consumible.cantidad"
                           type="number"
                           min="0"
                           max="5"
                           value="0"
+                          class="form-control"
+                          #cantidad
+                          (change)="
+                            seleccionConsumible(consumible, cantidad.value)
+                          "
+                        />
+                        <input
+                          matInput
+                          *ngIf="consumible.cantidad"
+                          type="number"
+                          min="0"
+                          max="5"
+                          [value]="consumible.cantidad"
                           class="form-control"
                           #cantidad
                           (change)="

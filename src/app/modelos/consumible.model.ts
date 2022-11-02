@@ -1,8 +1,8 @@
 export interface Consumible {
   nombre: string;
-  ingredientes: string[];
+  ingredientes: string;
   imagen: string;
   precio: number;
   tipo: string;
-  seleccionado: boolean;
+  seleccionado?: boolean;
 }

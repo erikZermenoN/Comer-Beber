@@ -15,20 +15,4 @@ export class PedidoService {
   getPedidosActListener() {
     return this.pedidosAct.asObservable();
   }
-
-  addPedido(
-    cliente: string,
-    mesa: number,
-    consumible: Consumible[],
-    precioTotal: number
-  ) {
-    const pedido: Pedido = {
-      cliente: cliente,
-      mesa: mesa,
-      consumible: consumible,
-      precioTotal: precioTotal,
-    };
-    this.pedidos.push(pedido);
-    this.pedidosAct.next([...this.pedidos]);
-  }
 }

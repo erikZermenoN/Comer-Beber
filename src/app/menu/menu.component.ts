@@ -40,6 +40,7 @@ export class MenuComponent implements OnInit {
         map((consumibleData) => {
           return consumibleData.consumibles.map((consumible) => {
             let transformConsumible: Consumible = {
+              _id: consumible._id,
               nombre: consumible.nombre,
               ingredientes: consumible.ingredientes,
               imagen: consumible.imagen,
@@ -130,19 +131,21 @@ export class MenuComponent implements OnInit {
     }
   }
 
-  seleccionConsumible(consumible: Consumible): void {
-    let validado: boolean = true;
-    this.seleccion.forEach((element) => {
-      if (element === consumible) {
-        validado = false;
-        if (!validado) {
-          this.seleccion = this.seleccion.filter((item) => item !== consumible);
-          return;
-        }
-      }
-    });
-    if (validado) {
-      this.seleccion.push(consumible);
-    }
+  seleccionConsumible(idConsumible: string, cantidad: string): void {
+    // let validado: boolean = true;
+    // this.seleccion.forEach((element) => {
+    //   if (element === consumible) {
+    //     validado = false;
+    //     if (!validado) {
+    //       this.seleccion = this.seleccion.filter((item) => item !== consumible);
+    //       return;
+    //     }
+    //   }
+    // });
+    // if (validado) {
+    //   this.seleccion.push(consumible);
+    // }
+    console.log(idConsumible, ' ', cantidad);
+    console.log(parseInt(cantidad));
   }
 }

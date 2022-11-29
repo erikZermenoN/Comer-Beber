@@ -25,6 +25,7 @@ export class MenuComponent implements OnInit {
   precioTotal: number = 0;
   nombre: string = '';
   mesa: number = 0;
+  isLoading = false;
 
   consumibles: Consumible[] = [];
   constructor(
@@ -41,21 +42,29 @@ export class MenuComponent implements OnInit {
       if (paramMap.has('id')) {
         this.mode = 'edit';
         this.idPedido = paramMap.get('id') || '';
-        this.seleccion = this.seleccionEdit;
+
         this.menuService
           .getDetallePedidosByPedido(this.idPedido)
           .subscribe((pedido) => {
             this.seleccionEdit = pedido.detallePedidos;
+            console.log('ola', this.seleccionEdit);
             this.pidiendo = true;
-            this.consumibles.forEach((consumible) => {
-              this.seleccionEdit.forEach((item) => {
+            this.seleccionEdit.forEach((item) => {
+              this.consumibles.forEach((consumible) => {
                 if (consumible._id === item.idConsumible) {
                   console.log(consumible._id, item.idConsumible);
                   consumible.cantidad = item.cantidad;
                   console.log(consumible.cantidad);
                 }
               });
+              const seleccionConsumible: SeleccionConsumible = {
+                idConsumible: item.idConsumible,
+                cantidad: item.cantidad,
+                precio: item.precio,
+              };
+              this.seleccion.push(seleccionConsumible);
             });
+
             console.log(this.consumibles);
           });
       } else {
@@ -67,6 +76,7 @@ export class MenuComponent implements OnInit {
 
   loadMenu(): void {
     //Cargamos el arreglo consumibles para el menu
+    this.isLoading = true;
     this.menuService
       .getConsumibles()
       .pipe(
@@ -85,6 +95,7 @@ export class MenuComponent implements OnInit {
         })
       )
       .subscribe((tranformedConsumibles) => {
+        this.isLoading = false;
         this.consumibles = tranformedConsumibles;
       });
   }

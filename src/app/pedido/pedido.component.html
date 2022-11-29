@@ -61,7 +61,7 @@
     </div>
   </div>
 </div>
-<mat-spinner *ngIf="pedidos.length <= 0" class="center"></mat-spinner>
+<mat-spinner *ngIf="isLoading"></mat-spinner>
 <section *ngIf="pedidos.length <= 0">
   <div class="text-center">
     <h1>Bienvenido a <span>Comer & Beber</span></h1>

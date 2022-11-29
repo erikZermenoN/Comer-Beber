@@ -14,14 +14,16 @@ export class PedidoComponent implements OnInit {
   pedidos: Pedido[] = [];
   consumibles: Consumible[] = [];
   cliente: Cliente = {};
+  isLoading = false;
 
   constructor(public pedidoService: PedidoService) {}
 
   ngOnInit() {
     let cont: number = 0;
+    this.isLoading = true;
     this.pedidoService.getPedidos().subscribe((result) => {
       //this.pedidos = result.pedidos;
-      console.log(result.pedidos.length, result.pedidos);
+      //console.log(result.pedidos.length, result.pedidos);
       result.pedidos.forEach((element) => {
         this.pedidoService
           .getDetallePedidosByPedido(element._id)
@@ -32,8 +34,8 @@ export class PedidoComponent implements OnInit {
                 .getConsumible(detallePedido.idConsumible)
                 .subscribe((consumible) => {
                   this.consumibles.push(consumible);
-
-                  if (cont === pedido.detallePedidos.length - 1) {
+                  cont++;
+                  if (cont === pedido.detallePedidos.length) {
                     const pedido1: Pedido = {
                       _id: element._id,
                       idCliente: element.idCliente,
@@ -44,33 +46,16 @@ export class PedidoComponent implements OnInit {
                     this.pedidos.push(pedido1);
                     this.consumibles = [];
                     cont = 0;
-                    console.log(this.pedidos);
                   }
-                  cont++;
-                  //console.log(consumible.nombre);
                 });
             });
-            //console.log(this.consumibles, ' olaaaaaaaaaaa');
-
-            //console.log(pedido1, ' adioooooooooooo');
-
-            //this.consumibles = [];
           });
-        // const pedido: Pedido = {
-        //   _id: element._id,
-        //   idCliente: element.idCliente,
-        //   fecha: element.fecha,
-        //   precioTotal: element.precioTotal,
-        //   consumibles: this.consumibles,
-        // };
-        // this.pedidos.push(pedido);
-        //this.consumibles = [];
       });
+      this.pedidoService.getCliente().subscribe((result) => {
+        this.cliente = result;
+      });
+      this.isLoading = false;
     });
-    this.pedidoService.getCliente().subscribe((result) => {
-      this.cliente = result;
-    });
-    console.log(this.pedidos);
   }
 
   onDelete(idPedido: any) {

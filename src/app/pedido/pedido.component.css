@@ -10,6 +10,10 @@ h1 {
   font-family: "Poppins", sans-serif;
 }
 
+mat-spinner {
+  margin: auto;
+}
+
 #encabezadoPedido {
   text-align: center;
   color: rgb(231, 93, 93);

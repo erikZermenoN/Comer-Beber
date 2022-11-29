@@ -10,7 +10,7 @@
     <mat-tab label="Desayuno">
       <form (submit)="onAddPedido()" #postForm="ngForm">
         <div class="container">
-          <mat-spinner *ngIf="consumibles.length <= 0"></mat-spinner>
+          <mat-spinner *ngIf="isLoading"></mat-spinner>
           <div class="row" *ngFor="let consumible of consumibles">
             <div *ngIf="consumible.tipo === 'desayuno'">
               <div class="col">

@@ -93,7 +93,7 @@ export class MenuService {
         `${baseURL}api.detallePedidos/pedido/${idPedido}`
       )
       .subscribe(() => {
-        alert('Pedido eliminado con exito');
+        console.log('DetallesPedido eliminado con exito');
       });
   }
 }

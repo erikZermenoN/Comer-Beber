@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { map } from 'rxjs';
 import * as moment from 'moment';
@@ -19,15 +19,18 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 export class MenuComponent implements OnInit {
   private mode = 'create';
   private idPedido: string = '';
-  pidiendo: boolean = false;
+
+  cliente: FormGroup;
+  consumible: FormGroup;
+
   seleccion: SeleccionConsumible[] = [];
   seleccionEdit: SeleccionConsumible[] = [];
+  consumibles: Consumible[] = [];
+
+  pidiendo: boolean = false;
   precioTotal: number = 0;
-  nombre: string = '';
-  mesa: number = 0;
   isLoading = false;
 
-  consumibles: Consumible[] = [];
   constructor(
     public pedidosService: PedidoService,
     public menuService: MenuService,
@@ -37,24 +40,22 @@ export class MenuComponent implements OnInit {
 
   ngOnInit(): void {
     moment.locale('es');
+    this.inicializarFormGroups();
     this.loadMenu();
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
       if (paramMap.has('id')) {
         this.mode = 'edit';
-        this.idPedido = paramMap.get('id') || '';
+        this.idPedido = paramMap.get('id');
 
         this.menuService
           .getDetallePedidosByPedido(this.idPedido)
           .subscribe((pedido) => {
             this.seleccionEdit = pedido.detallePedidos;
-            console.log('ola', this.seleccionEdit);
             this.pidiendo = true;
             this.seleccionEdit.forEach((item) => {
               this.consumibles.forEach((consumible) => {
                 if (consumible._id === item.idConsumible) {
-                  console.log(consumible._id, item.idConsumible);
                   consumible.cantidad = item.cantidad;
-                  console.log(consumible.cantidad);
                 }
               });
               const seleccionConsumible: SeleccionConsumible = {
@@ -64,8 +65,6 @@ export class MenuComponent implements OnInit {
               };
               this.seleccion.push(seleccionConsumible);
             });
-
-            console.log(this.consumibles);
           });
       } else {
         this.mode = 'create';
@@ -74,6 +73,7 @@ export class MenuComponent implements OnInit {
     });
   }
 
+  //Metodo para cargar el menu
   loadMenu(): void {
     //Cargamos el arreglo consumibles para el menu
     this.isLoading = true;
@@ -100,10 +100,9 @@ export class MenuComponent implements OnInit {
       });
   }
 
+  // Método para agregar un nuevo pedido o modificarlo sea el caso
   onAddPedido() {
-    // if (form.invalid) {
-    //   return;
-    // } else
+    console.log('olaaaaaaaaaaaa0');
     if (this.seleccion.length <= 0) {
       alert('Seleccione al menos un platillo o bebida');
       return;
@@ -113,13 +112,15 @@ export class MenuComponent implements OnInit {
       this.precioTotal += element.precio;
     });
     if (this.mode === 'create') {
+      console.log('olaaaaaaaaaaaa1');
       this.menuService
         .addPedido(moment().format(), this.precioTotal)
         .subscribe((result) => {
+          console.log('olaaaaaaaaaaaa2');
           this.seleccion.forEach((element) => {
             this.menuService.addDetallePedido(element, result.idPedido);
-            alert('Pedido agregado con exito');
           });
+          location.assign('http://localhost:4200/pedidos');
           this.seleccion = [];
         });
     } else {
@@ -130,14 +131,15 @@ export class MenuComponent implements OnInit {
 
           this.seleccion.forEach((element) => {
             this.menuService.addDetallePedido(element, this.idPedido);
-            alert('Pedido actualizado con exito');
           });
+          location.assign('http://localhost:4200/pedidos');
           this.seleccion = [];
         });
     }
     this.precioTotal = 0;
   }
 
+  // Metodo para poner el menu en modo pedido
   cambioEstadoPedido(): void {
     //Obtenemos el id del cliente almacenado en el navegador
     let idCliente = localStorage.getItem('idCliente');
@@ -161,21 +163,21 @@ export class MenuComponent implements OnInit {
     } else {
       // Si no existe el id...
       const dialogRef = this.dialog.open(FormClienteComponent, {
-        // Abrmimos la ventana emergente
+        // Abrmimos la ventana emergente para agregar un cliente
         width: '500px',
-        data: { nombre: '', mesa: '' },
+        data: this.cliente,
       });
 
       dialogRef.afterClosed().subscribe((result) => {
         // Despues de cerrarse...
         console.log('The dialog was closed');
         if (result) {
-          this.nombre = result.nombre;
-          this.mesa = result.mesa;
+          this.cliente.value.nombre = result.value.nombre;
+          this.cliente.value.mesa = result.value.mesa;
           this.menuService.addCliente(
             // Registramos el cliente
-            this.nombre,
-            this.mesa,
+            this.cliente.value.nombre,
+            this.cliente.value.mesa,
             moment().format()
           );
 
@@ -189,17 +191,23 @@ export class MenuComponent implements OnInit {
     }
   }
 
+  // Este método se ejecuta cuando hay un cambio en la cantidad de algun consumible
   seleccionConsumible(consumible: Consumible, cantidad: string): void {
     let validado: boolean = true;
     const cantidadConsumible: number = parseInt(cantidad);
+
     this.seleccion.forEach((element) => {
+      // Se revisa la lista de consumibles seleccionados
       if (element.idConsumible === consumible._id) {
+        // Si coincide con alguno ya seleccionado
         validado = false;
         if (!validado) {
+          // se elimina de la lista
           this.seleccion = this.seleccion.filter(
             (item) => item.idConsumible !== consumible._id
           );
           if (cantidadConsumible > 0) {
+            // en caso de que la cantidad sea mayor a 0 se vuelve a registrar
             const seleccionConsumible: SeleccionConsumible = {
               idConsumible: consumible._id,
               cantidad: parseInt(cantidad),
@@ -212,6 +220,7 @@ export class MenuComponent implements OnInit {
       }
     });
     if (validado) {
+      // Si es nueva seleccion se agrega a la lista
       const seleccionConsumible: SeleccionConsumible = {
         idConsumible: consumible._id,
         cantidad: parseInt(cantidad),
@@ -220,5 +229,39 @@ export class MenuComponent implements OnInit {
       this.seleccion.push(seleccionConsumible);
     }
     console.log(this.seleccion);
+  }
+
+  // Este método inicializa los FormGroups
+  inicializarFormGroups(): void {
+    this.cliente = new FormGroup({
+      nombre: new FormControl(null, {
+        validators: [Validators.required, Validators.minLength(3)],
+      }),
+      mesa: new FormControl(null, {
+        validators: [Validators.required, Validators.minLength(1)],
+      }),
+    });
+
+    this.consumible = new FormGroup({
+      nombre: new FormControl(null, {
+        validators: [Validators.required, Validators.minLength(3)],
+      }),
+      ingredientes: new FormControl(null, {
+        validators: [Validators.required, Validators.minLength(3)],
+      }),
+      imagen: new FormControl(null, {
+        validators: [Validators.required],
+        //asyncValidators: [mimeType],
+      }),
+      precio: new FormControl(null, {
+        validators: [Validators.required, Validators.minLength(1)],
+      }),
+      tipo: new FormControl(null, {
+        validators: [Validators.required],
+      }),
+      cantidad: new FormControl(null, {
+        validators: [Validators.required, Validators.minLength(1)],
+      }),
+    });
   }
 }

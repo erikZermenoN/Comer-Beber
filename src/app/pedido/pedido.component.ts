@@ -60,5 +60,6 @@ export class PedidoComponent implements OnInit {
 
   onDelete(idPedido: any) {
     this.pedidoService.deletePedido(idPedido);
+    this.pedidos = this.pedidos.filter((pedido) => pedido._id !== idPedido);
   }
 }

@@ -43,7 +43,7 @@ export class PedidoService {
     this.http
       .delete<{ message: string }>(`${baseURL}api.pedidos/${idPedido}`)
       .subscribe(() => {
-        alert('Pedido eliminado con exito');
+        console.log('Pedido eliminado con exito');
       });
   }
 }

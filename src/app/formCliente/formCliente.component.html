@@ -1,56 +1,57 @@
-<h1 mat-dialog-title>Ingresa tu datos</h1>
-<div mat-dialog-content>
-  <div class="row">
-    <mat-form-field>
-      <input
-        matInput
-        type="text"
-        name="nombre"
-        [(ngModel)]="data.nombre"
-        required
-        #nombre="ngModel"
-        placeholder="Nombre"
-      />
-      <mat-error *ngIf="nombre.invalid">Por favor ingrese un nombre</mat-error>
-    </mat-form-field>
+<form [formGroup]="cliente">
+  <h1 mat-dialog-title>Ingresa tu datos</h1>
+  <div mat-dialog-content>
+    <div class="row">
+      <mat-form-field>
+        <input
+          matInput
+          type="text"
+          name="nombre"
+          formControlName="nombre"
+          placeholder="Nombre"
+        />
+        <mat-error *ngIf="cliente.get('nombre').invalid"
+          >Por favor ingrese un nombre</mat-error
+        >
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <mat-form-field>
+        <input
+          matInput
+          type="number"
+          max="15"
+          min="1"
+          maxlength="2"
+          name="mesa"
+          formControlName="mesa"
+          placeholder="No. de mesa"
+        />
+        <mat-error *ngIf="cliente.get('mesa').invalid"
+          >Por favor ingrese un numero de mesa</mat-error
+        >
+      </mat-form-field>
+    </div>
   </div>
-  <div class="row">
-    <mat-form-field>
-      <input
-        matInput
-        type="number"
-        max="15"
-        min="1"
-        name="mesa"
-        [(ngModel)]="data.mesa"
-        required
-        #mesa="ngModel"
-        placeholder="No. de mesa"
-      />
-      <mat-error *ngIf="mesa.invalid"
-        >Por favor ingrese un numero de mesa</mat-error
-      >
-    </mat-form-field>
+  <div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">No gracias</button>
+    <button
+      *ngIf="cliente.get('mesa').invalid || cliente.get('nombre').invalid"
+      mat-button
+      [mat-dialog-close]="cliente"
+      cdkFocusInitial
+      disabled="true"
+    >
+      Guardar
+    </button>
+    <button
+      *ngIf="!cliente.get('mesa').invalid && !cliente.get('nombre').invalid"
+      mat-button
+      [mat-dialog-close]="cliente"
+      cdkFocusInitial
+      disabled="false"
+    >
+      Guardar
+    </button>
   </div>
-</div>
-<div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">No gracias</button>
-  <button
-    *ngIf="mesa.invalid || nombre.invalid"
-    mat-button
-    [mat-dialog-close]="data"
-    cdkFocusInitial
-    disabled="true"
-  >
-    Guardar
-  </button>
-  <button
-    *ngIf="!mesa.invalid && !nombre.invalid"
-    mat-button
-    [mat-dialog-close]="data"
-    cdkFocusInitial
-    disabled="false"
-  >
-    Guardar
-  </button>
-</div>
+</form>

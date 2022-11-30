@@ -13,310 +13,302 @@
   >
     <!-- APARTADO DE DESAYUNO -->
     <mat-tab label="Desayuno">
-      <form (submit)="onAddPedido()">
-        <div class="container">
-          <div class="row" *ngFor="let consumible of consumibles">
-            <div *ngIf="consumible.tipo === 'desayuno'">
-              <div class="col">
-                <mat-card>
-                  <div class="row">
-                    <div class="col-sm-2"></div>
-                    <div class="col-sm-3">
-                      <img
-                        [src]="consumible.imagen"
-                        class="rounded-circle"
-                        [alt]="consumible.nombre"
-                        width="180"
-                        height="150"
-                      />
+      <div class="container">
+        <div class="row" *ngFor="let consumible of consumibles">
+          <div *ngIf="consumible.tipo === 'desayuno'">
+            <div class="col">
+              <mat-card>
+                <div class="row">
+                  <div class="col-sm-2"></div>
+                  <div class="col-sm-3">
+                    <img
+                      [src]="consumible.imagen"
+                      class="rounded-circle"
+                      [alt]="consumible.nombre"
+                      width="180"
+                      height="150"
+                    />
+                  </div>
+                  <div class="col-sm-4">
+                    <div class="menu-content">
+                      <b>{{ consumible.nombre }}</b> ----------->
+                      <span>${{ consumible.precio }}</span>
                     </div>
-                    <div class="col-sm-4">
-                      <div class="menu-content">
-                        <b>{{ consumible.nombre }}</b> ----------->
-                        <span>${{ consumible.precio }}</span>
-                      </div>
-                      <div class="menu-ingredients">
-                        {{ consumible.ingredientes }}
-                      </div>
-                    </div>
-                    <div class="col-sm-3" *ngIf="pidiendo">
-                      <mat-form-field appearance="fill">
-                        <input
-                          matInput
-                          *ngIf="!consumible.cantidad"
-                          type="number"
-                          min="0"
-                          max="5"
-                          value="0"
-                          class="form-control"
-                          #cantidad
-                          (change)="
-                            seleccionConsumible(consumible, cantidad.value)
-                          "
-                        />
-                        <input
-                          matInput
-                          *ngIf="consumible.cantidad"
-                          type="number"
-                          min="0"
-                          max="5"
-                          [value]="consumible.cantidad"
-                          class="form-control"
-                          #cantidad
-                          (change)="
-                            seleccionConsumible(consumible, cantidad.value)
-                          "
-                        />
-                      </mat-form-field>
+                    <div class="menu-ingredients">
+                      {{ consumible.ingredientes }}
                     </div>
                   </div>
-                </mat-card>
-              </div>
+                  <div class="col-sm-3" *ngIf="pidiendo">
+                    <mat-form-field appearance="fill">
+                      <input
+                        matInput
+                        *ngIf="!consumible.cantidad"
+                        type="number"
+                        min="0"
+                        max="5"
+                        value="0"
+                        class="form-control"
+                        #cantidad
+                        (change)="
+                          seleccionConsumible(consumible, cantidad.value)
+                        "
+                      />
+                      <input
+                        matInput
+                        *ngIf="consumible.cantidad"
+                        type="number"
+                        min="0"
+                        max="5"
+                        [value]="consumible.cantidad"
+                        class="form-control"
+                        #cantidad
+                        (change)="
+                          seleccionConsumible(consumible, cantidad.value)
+                        "
+                      />
+                    </mat-form-field>
+                  </div>
+                </div>
+              </mat-card>
             </div>
           </div>
-          <div id="boton">
-            <button
-              mat-raised-button
-              color="warn"
-              *ngIf="pidiendo"
-              type="submit"
-            >
-              Pedir
-            </button>
-          </div>
         </div>
-      </form>
+        <div id="boton">
+          <button
+            mat-raised-button
+            color="warn"
+            *ngIf="pidiendo"
+            (click)="onAddPedido()"
+          >
+            Pedir
+          </button>
+        </div>
+      </div>
     </mat-tab>
 
     <!-- APARTADO DE COMIDA -->
     <mat-tab label="Comida">
-      <form (submit)="onAddPedido()">
-        <div class="container">
-          <div class="row" *ngFor="let consumible of consumibles">
-            <div *ngIf="consumible.tipo === 'comida'">
-              <div class="col">
-                <mat-card>
-                  <div class="row">
-                    <div class="col-sm-2"></div>
-                    <div class="col-sm-3">
-                      <img
-                        [src]="consumible.imagen"
-                        class="rounded-circle"
-                        [alt]="consumible.nombre"
-                        width="180"
-                        height="150"
-                      />
+      <div class="container">
+        <div class="row" *ngFor="let consumible of consumibles">
+          <div *ngIf="consumible.tipo === 'comida'">
+            <div class="col">
+              <mat-card>
+                <div class="row">
+                  <div class="col-sm-2"></div>
+                  <div class="col-sm-3">
+                    <img
+                      [src]="consumible.imagen"
+                      class="rounded-circle"
+                      [alt]="consumible.nombre"
+                      width="180"
+                      height="150"
+                    />
+                  </div>
+                  <div class="col-sm-4">
+                    <div class="menu-content">
+                      <b>{{ consumible.nombre }}</b> ----------->
+                      <span>${{ consumible.precio }}</span>
                     </div>
-                    <div class="col-sm-4">
-                      <div class="menu-content">
-                        <b>{{ consumible.nombre }}</b> ----------->
-                        <span>${{ consumible.precio }}</span>
-                      </div>
-                      <div class="menu-ingredients">
-                        {{ consumible.ingredientes }}
-                      </div>
-                    </div>
-                    <div class="col-sm-3" *ngIf="pidiendo">
-                      <mat-form-field appearance="fill">
-                        <input
-                          matInput
-                          *ngIf="!consumible.cantidad"
-                          type="number"
-                          min="0"
-                          max="5"
-                          value="0"
-                          class="form-control"
-                          #cantidad
-                          (change)="
-                            seleccionConsumible(consumible, cantidad.value)
-                          "
-                        />
-                        <input
-                          matInput
-                          *ngIf="consumible.cantidad"
-                          type="number"
-                          min="0"
-                          max="5"
-                          [value]="consumible.cantidad"
-                          class="form-control"
-                          #cantidad
-                          (change)="
-                            seleccionConsumible(consumible, cantidad.value)
-                          "
-                        />
-                      </mat-form-field>
+                    <div class="menu-ingredients">
+                      {{ consumible.ingredientes }}
                     </div>
                   </div>
-                </mat-card>
-              </div>
+                  <div class="col-sm-3" *ngIf="pidiendo">
+                    <mat-form-field appearance="fill">
+                      <input
+                        matInput
+                        *ngIf="!consumible.cantidad"
+                        type="number"
+                        min="0"
+                        max="5"
+                        value="0"
+                        class="form-control"
+                        #cantidad
+                        (change)="
+                          seleccionConsumible(consumible, cantidad.value)
+                        "
+                      />
+                      <input
+                        matInput
+                        *ngIf="consumible.cantidad"
+                        type="number"
+                        min="0"
+                        max="5"
+                        [value]="consumible.cantidad"
+                        class="form-control"
+                        #cantidad
+                        (change)="
+                          seleccionConsumible(consumible, cantidad.value)
+                        "
+                      />
+                    </mat-form-field>
+                  </div>
+                </div>
+              </mat-card>
             </div>
           </div>
-          <div id="boton">
-            <button
-              mat-raised-button
-              color="warn"
-              *ngIf="pidiendo"
-              type="submit"
-            >
-              Pedir
-            </button>
-          </div>
         </div>
-      </form>
+        <div id="boton">
+          <button
+            mat-raised-button
+            color="warn"
+            *ngIf="pidiendo"
+            (click)="onAddPedido()"
+          >
+            Pedir
+          </button>
+        </div>
+      </div>
     </mat-tab>
 
     <!-- APARTADO DE CENA -->
     <mat-tab label="Cena">
-      <form (submit)="onAddPedido()">
-        <div class="container">
-          <div class="row" *ngFor="let consumible of consumibles">
-            <div *ngIf="consumible.tipo === 'cena'">
-              <div class="col">
-                <mat-card>
-                  <div class="row">
-                    <div class="col-sm-2"></div>
-                    <div class="col-sm-3">
-                      <img
-                        [src]="consumible.imagen"
-                        class="rounded-circle"
-                        [alt]="consumible.nombre"
-                        width="180"
-                        height="150"
-                      />
+      <div class="container">
+        <div class="row" *ngFor="let consumible of consumibles">
+          <div *ngIf="consumible.tipo === 'cena'">
+            <div class="col">
+              <mat-card>
+                <div class="row">
+                  <div class="col-sm-2"></div>
+                  <div class="col-sm-3">
+                    <img
+                      [src]="consumible.imagen"
+                      class="rounded-circle"
+                      [alt]="consumible.nombre"
+                      width="180"
+                      height="150"
+                    />
+                  </div>
+                  <div class="col-sm-4">
+                    <div class="menu-content">
+                      <b>{{ consumible.nombre }}</b> ----------->
+                      <span>${{ consumible.precio }}</span>
                     </div>
-                    <div class="col-sm-4">
-                      <div class="menu-content">
-                        <b>{{ consumible.nombre }}</b> ----------->
-                        <span>${{ consumible.precio }}</span>
-                      </div>
-                      <div class="menu-ingredients">
-                        {{ consumible.ingredientes }}
-                      </div>
-                    </div>
-                    <div class="col-sm-3" *ngIf="pidiendo">
-                      <mat-form-field appearance="fill">
-                        <input
-                          matInput
-                          *ngIf="!consumible.cantidad"
-                          type="number"
-                          min="0"
-                          max="5"
-                          value="0"
-                          class="form-control"
-                          #cantidad
-                          (change)="
-                            seleccionConsumible(consumible, cantidad.value)
-                          "
-                        />
-                        <input
-                          matInput
-                          *ngIf="consumible.cantidad"
-                          type="number"
-                          min="0"
-                          max="5"
-                          [value]="consumible.cantidad"
-                          class="form-control"
-                          #cantidad
-                          (change)="
-                            seleccionConsumible(consumible, cantidad.value)
-                          "
-                        />
-                      </mat-form-field>
+                    <div class="menu-ingredients">
+                      {{ consumible.ingredientes }}
                     </div>
                   </div>
-                </mat-card>
-              </div>
+                  <div class="col-sm-3" *ngIf="pidiendo">
+                    <mat-form-field appearance="fill">
+                      <input
+                        matInput
+                        *ngIf="!consumible.cantidad"
+                        type="number"
+                        min="0"
+                        max="5"
+                        value="0"
+                        class="form-control"
+                        #cantidad
+                        (change)="
+                          seleccionConsumible(consumible, cantidad.value)
+                        "
+                      />
+                      <input
+                        matInput
+                        *ngIf="consumible.cantidad"
+                        type="number"
+                        min="0"
+                        max="5"
+                        [value]="consumible.cantidad"
+                        class="form-control"
+                        #cantidad
+                        (change)="
+                          seleccionConsumible(consumible, cantidad.value)
+                        "
+                      />
+                    </mat-form-field>
+                  </div>
+                </div>
+              </mat-card>
             </div>
           </div>
-          <div id="boton">
-            <button
-              mat-raised-button
-              color="warn"
-              *ngIf="pidiendo"
-              type="submit"
-            >
-              Pedir
-            </button>
-          </div>
         </div>
-      </form>
+        <div id="boton">
+          <button
+            mat-raised-button
+            color="warn"
+            *ngIf="pidiendo"
+            (click)="onAddPedido()"
+          >
+            Pedir
+          </button>
+        </div>
+      </div>
     </mat-tab>
 
     <!-- APARTADO DE BEBIDAS -->
     <mat-tab label="Bebidas">
-      <form (submit)="onAddPedido()">
-        <div class="container">
-          <div class="row" *ngFor="let consumible of consumibles">
-            <div *ngIf="consumible.tipo === 'bebida'">
-              <div class="col">
-                <mat-card>
-                  <div class="row">
-                    <div class="col-sm-2"></div>
-                    <div class="col-sm-3">
-                      <img
-                        [src]="consumible.imagen"
-                        class="rounded-circle"
-                        [alt]="consumible.nombre"
-                        width="180"
-                        height="150"
-                      />
+      <div class="container">
+        <div class="row" *ngFor="let consumible of consumibles">
+          <div *ngIf="consumible.tipo === 'bebida'">
+            <div class="col">
+              <mat-card>
+                <div class="row">
+                  <div class="col-sm-2"></div>
+                  <div class="col-sm-3">
+                    <img
+                      [src]="consumible.imagen"
+                      class="rounded-circle"
+                      [alt]="consumible.nombre"
+                      width="180"
+                      height="150"
+                    />
+                  </div>
+                  <div class="col-sm-4">
+                    <div class="menu-content">
+                      <b>{{ consumible.nombre }}</b> ----------->
+                      <span>${{ consumible.precio }}</span>
                     </div>
-                    <div class="col-sm-4">
-                      <div class="menu-content">
-                        <b>{{ consumible.nombre }}</b> ----------->
-                        <span>${{ consumible.precio }}</span>
-                      </div>
-                      <div class="menu-ingredients">
-                        {{ consumible.ingredientes }}
-                      </div>
-                    </div>
-                    <div class="col-sm-3 form-outline" *ngIf="pidiendo">
-                      <mat-form-field appearance="fill">
-                        <input
-                          matInput
-                          *ngIf="!consumible.cantidad"
-                          type="number"
-                          min="0"
-                          max="5"
-                          value="0"
-                          class="form-control"
-                          #cantidad
-                          (change)="
-                            seleccionConsumible(consumible, cantidad.value)
-                          "
-                        />
-                        <input
-                          matInput
-                          *ngIf="consumible.cantidad"
-                          type="number"
-                          min="0"
-                          max="5"
-                          [value]="consumible.cantidad"
-                          class="form-control"
-                          #cantidad
-                          (change)="
-                            seleccionConsumible(consumible, cantidad.value)
-                          "
-                        />
-                      </mat-form-field>
+                    <div class="menu-ingredients">
+                      {{ consumible.ingredientes }}
                     </div>
                   </div>
-                </mat-card>
-              </div>
+                  <div class="col-sm-3 form-outline" *ngIf="pidiendo">
+                    <mat-form-field appearance="fill">
+                      <input
+                        matInput
+                        *ngIf="!consumible.cantidad"
+                        type="number"
+                        min="0"
+                        max="5"
+                        value="0"
+                        class="form-control"
+                        #cantidad
+                        (change)="
+                          seleccionConsumible(consumible, cantidad.value)
+                        "
+                      />
+                      <input
+                        matInput
+                        *ngIf="consumible.cantidad"
+                        type="number"
+                        min="0"
+                        max="5"
+                        [value]="consumible.cantidad"
+                        class="form-control"
+                        #cantidad
+                        (change)="
+                          seleccionConsumible(consumible, cantidad.value)
+                        "
+                      />
+                    </mat-form-field>
+                  </div>
+                </div>
+              </mat-card>
             </div>
           </div>
-          <div id="boton">
-            <button
-              mat-raised-button
-              color="warn"
-              *ngIf="pidiendo"
-              type="submit"
-            >
-              Pedir
-            </button>
-          </div>
         </div>
-      </form>
+        <div id="boton">
+          <button
+            mat-raised-button
+            color="warn"
+            *ngIf="pidiendo"
+            (click)="onAddPedido()"
+          >
+            Pedir
+          </button>
+        </div>
+      </div>
     </mat-tab>
   </mat-tab-group>
 </div>

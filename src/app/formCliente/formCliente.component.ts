@@ -1,6 +1,5 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Cliente } from '../modelos/cliente.model';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({

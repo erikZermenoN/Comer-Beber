@@ -26,6 +26,7 @@ import { InicioComponent } from './inicio/inicio.component';
 import { FooterComponent } from './footer/footer.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { FormClienteComponent } from './formCliente/formCliente.component';
+import { FormLoginComponent } from './formLogin/formLogin.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { FormClienteComponent } from './formCliente/formCliente.component';
     FooterComponent,
     SidenavComponent,
     FormClienteComponent,
+    FormLoginComponent,
   ],
   imports: [
     BrowserModule,

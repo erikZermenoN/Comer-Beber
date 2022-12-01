@@ -1,0 +1,87 @@
+<link
+  href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css"
+  rel="stylesheet"
+  id="bootstrap-css"
+/>
+
+<div class="modal-header">
+  <h1 mat-dialog-title>Iniciar sesión</h1>
+</div>
+<!-- /.modal-header -->
+
+<div class="modal-body" mat-dialog-conten>
+  <form [formGroup]="empleado">
+    <div class="form-group">
+      <div class="input-group">
+        <mat-form-field>
+          <input
+            type="text"
+            matInput
+            formControlName="usuario"
+            placeholder="Usuario"
+          />
+          <mat-error *ngIf="empleado.get('usuario').invalid"
+            >El usuario es muy corto</mat-error
+          >
+        </mat-form-field>
+        <label
+          for="uLogin"
+          class="input-group-addon glyphicon glyphicon-user"
+        ></label>
+      </div>
+    </div>
+    <!-- /.form-group -->
+
+    <div class="form-group">
+      <div class="input-group">
+        <mat-form-field>
+          <input
+            type="password"
+            matInput
+            formControlName="contrasena"
+            placeholder="Contraseña"
+          />
+          <mat-error *ngIf="empleado.get('contrasena').invalid"
+            >La contraseña es muy corta</mat-error
+          >
+        </mat-form-field>
+        <label
+          for="uPassword"
+          class="input-group-addon glyphicon glyphicon-lock"
+        ></label>
+      </div>
+      <!-- /.input-group -->
+    </div>
+    <!-- /.form-group -->
+  </form>
+</div>
+<!-- /.modal-body -->
+
+<div mat-dialog-actions class="modal-footer">
+  <button class="form-control btn btn-danger" mat-button (click)="onNoClick()">
+    Cancelar
+  </button>
+  <button
+    *ngIf="
+      empleado.get('usuario').invalid || empleado.get('contrasena').invalid
+    "
+    class="form-control btn btn-danger"
+    mat-button
+    [mat-dialog-close]="empleado"
+    cdkFocusInitial
+    disabled="true"
+  >
+    Iniciar sesión
+  </button>
+  <button
+    *ngIf="
+      !empleado.get('usuario').invalid && !empleado.get('contrasena').invalid
+    "
+    class="form-control btn btn-danger"
+    mat-button
+    (click)="login()"
+    disabled="false"
+  >
+    Iniciar sesión
+  </button>
+</div>

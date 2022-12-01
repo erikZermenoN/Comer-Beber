@@ -8,6 +8,7 @@ const clienteRoutes = require("./routes/clientes");
 const pedidoRoutes = require("./routes/pedidos");
 const consumibleRoutes = require("./routes/consumibles");
 const detaPediRoutes = require("./routes/detallePedidos");
+const empleadoRoutes = require("./routes/empleados");
 
 // mongoose.set('useCreateIndex', true)
 mongoose
@@ -43,5 +44,6 @@ app.use("/api.clientes", clienteRoutes);
 app.use("/api.pedidos", pedidoRoutes);
 app.use("/api.consumibles", consumibleRoutes);
 app.use("/api.detallePedidos", detaPediRoutes);
+app.use("/api.empleados", empleadoRoutes);
 
 module.exports = app;

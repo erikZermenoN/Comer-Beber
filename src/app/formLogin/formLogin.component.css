@@ -1,0 +1,38 @@
+.modal-dialog {
+  display: flex;
+  justify-content: center;
+  width: 300px;
+}
+.modal-footer {
+  display: flex;
+  justify-content: center;
+  height: 30px;
+  margin: 0;
+}
+.modal-footer .btn {
+  font-weight: bold;
+}
+.modal-footer .progress {
+  display: none;
+  height: 32px;
+  margin: 0;
+}
+.input-group-addon {
+  color: #fff;
+  background: #d9534f;
+}
+
+input {
+  padding-top: 2rem;
+  margin: 0 auto;
+}
+
+.btn {
+  width: 150px;
+  font-size: larger;
+}
+
+.modal-body {
+  display: flex;
+  justify-content: center;
+}

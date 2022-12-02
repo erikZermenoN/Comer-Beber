@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const pedidoSchema = mongoose.Schema(
   {
     idCliente: { type: mongoose.Types.ObjectId },
-    fecha: { type: String, require: true },
+    fecha: { type: Date, require: true },
     precioTotal: { type: Number, require: true },
   }
   // {

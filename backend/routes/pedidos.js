@@ -1,4 +1,5 @@
 const express = require("express");
+const moment = require("moment/moment");
 const { createShorthandPropertyAssignment } = require("typescript");
 const Pedido = require("../models/pedido");
 
@@ -40,6 +41,28 @@ router.get("/cliente/:id", (req, res, next) => {
       pedidos: documents,
     });
   });
+});
+
+router.get("/empleado", (req, res, next) => {
+  Pedido.find({ fecha: { $gte: moment().format("L") } })
+    .then((documents) => {
+      if (documents.length > 0) {
+        res.status(200).json({
+          message: "Pedidos expuestos con exito!",
+          pedidos: documents,
+        });
+      } else {
+        res.status(200).json({
+          message: "Pedidos inexistentes",
+        });
+      }
+    })
+    .catch((error) => {
+      res.status(400).json({
+        message: "No a sido posible mostrar los pedidos",
+        error: error,
+      });
+    });
 });
 
 // router.get("/:id", (req, res, next) => {

@@ -1,5 +1,11 @@
 <div>
-  <div id="titulo">
+  <div id="titulo" *ngIf="isEmpleado">
+    <h2>Menu</h2>
+    <button mat-stroked-button color="warn" (click)="onAddPlatillo()">
+      Nuevo platillo
+    </button>
+  </div>
+  <div id="titulo" *ngIf="!isEmpleado"> 
     <h2>Menu</h2>
     <button mat-stroked-button color="warn" (click)="cambioEstadoPedido()">
       Arma tu pedido
@@ -37,6 +43,14 @@
                     <div class="menu-ingredients">
                       {{ consumible.ingredientes }}
                     </div>
+                  </div>
+                  <div class="col-sm-3" *ngIf="isEmpleado" style="padding: 40px;"> 
+                    <button mat-raised-button color="warn" style="margin-right: 20px;" (click)="onDeletePlatillo(consumible._id)">
+                      Eliminar
+                    </button>
+                    <button mat-raised-button color="primary">
+                      Modificar
+                    </button>
                   </div>
                   <div class="col-sm-3" *ngIf="pidiendo">
                     <mat-form-field appearance="fill">
@@ -113,6 +127,14 @@
                       {{ consumible.ingredientes }}
                     </div>
                   </div>
+                  <div class="col-sm-3" *ngIf="isEmpleado" style="padding: 40px;"> 
+                    <button mat-raised-button color="warn" style="margin-right: 20px;" (click)="onDeletePlatillo(consumible._id)">
+                      Eliminar
+                    </button>
+                    <button mat-raised-button color="primary">
+                      Modificar
+                    </button>
+                  </div>
                   <div class="col-sm-3" *ngIf="pidiendo">
                     <mat-form-field appearance="fill">
                       <input
@@ -187,6 +209,14 @@
                     <div class="menu-ingredients">
                       {{ consumible.ingredientes }}
                     </div>
+                  </div>
+                  <div class="col-sm-3" *ngIf="isEmpleado" style="padding: 40px;"> 
+                    <button mat-raised-button color="warn" style="margin-right: 20px;" (click)="onDeletePlatillo(consumible._id)">
+                      Eliminar
+                    </button>
+                    <button mat-raised-button color="primary">
+                      Modificar
+                    </button>
                   </div>
                   <div class="col-sm-3" *ngIf="pidiendo">
                     <mat-form-field appearance="fill">
@@ -263,6 +293,14 @@
                       {{ consumible.ingredientes }}
                     </div>
                   </div>
+                  <div class="col-sm-3" *ngIf="isEmpleado" style="padding: 40px;"> 
+                    <button mat-raised-button color="warn" style="margin-right: 20px;" (click)="onDeletePlatillo(consumible._id)">
+                      Eliminar
+                    </button>
+                    <button mat-raised-button color="primary">
+                      Modificar
+                    </button>
+                  </div>
                   <div class="col-sm-3 form-outline" *ngIf="pidiendo">
                     <mat-form-field appearance="fill">
                       <input
@@ -298,7 +336,7 @@
             </div>
           </div>
         </div>
-        <div id="boton">
+        <div id="boton" *ngIf="!isEmpleado">
           <button
             mat-raised-button
             color="warn"
@@ -312,3 +350,6 @@
     </mat-tab>
   </mat-tab-group>
 </div>
+<p class="info-text mat-body-1" *ngIf="consumibles.length <= 0 && !isLoading">
+  No hay platillos registrados
+</p>

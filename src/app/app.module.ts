@@ -13,6 +13,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatListModule } from '@angular/material/list';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSelectModule } from '@angular/material/select';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -27,6 +28,7 @@ import { FooterComponent } from './footer/footer.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { FormClienteComponent } from './formCliente/formCliente.component';
 import { FormLoginComponent } from './formLogin/formLogin.component';
+import { FormNuevoPlatilloComponent } from './formNuevoPlatillo/formNuevoPlatillo.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +41,7 @@ import { FormLoginComponent } from './formLogin/formLogin.component';
     SidenavComponent,
     FormClienteComponent,
     FormLoginComponent,
+    FormNuevoPlatilloComponent
   ],
   imports: [
     BrowserModule,
@@ -56,6 +59,7 @@ import { FormLoginComponent } from './formLogin/formLogin.component';
     MatTabsModule,
     MatListModule,
     MatProgressSpinnerModule,
+    MatSelectModule,
     BrowserAnimationsModule,
     HttpClientModule,
   ],

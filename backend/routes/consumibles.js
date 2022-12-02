@@ -27,8 +27,9 @@ const storage = multer.diskStorage({
 
 router.post(
   "",
-  multer({ storage: storage }).single("image"),
+  multer({ storage: storage }).single("imagen"),
   (req, res, next) => {
+    console.log(req.body)
     const url = req.protocol + "://" + req.get("host");
     const consumible = new Consumible({
       nombre: req.body.nombre,
@@ -44,7 +45,7 @@ router.post(
           message: "Consumible agregado correctamente",
           consumible: {
             ...createdConsumible,
-            id: createdConsumible._id,
+            _id: createdConsumible._id,
           },
         });
       })
@@ -59,18 +60,18 @@ router.post(
 
 router.put(
   "/:id",
-  multer({ storage: storage }).single("image"),
+  multer({ storage: storage }).single("imagen"),
   (req, res, next) => {
-    let image = req.body.imagen;
+    let imagen = req.body.imagen;
     if (req.file) {
       const url = req.protocol + "://" + req.get("host");
-      image = url + "/images/" + req.file.filename;
+      imagen = url + "/images/" + req.file.filename;
     }
     const consumible = new Consumible({
       _id: req.body.id,
       nombre: req.body.nombre,
       ingredientes: req.body.ingredientes,
-      imagen: image,
+      imagen: imagen,
       precio: req.body.precio,
       tipo: req.body.tipo,
     });

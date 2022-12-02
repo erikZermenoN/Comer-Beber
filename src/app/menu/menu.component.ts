@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { map } from 'rxjs';
@@ -10,13 +11,14 @@ import { FormClienteComponent } from '../formCliente/formCliente.component';
 import { MenuService } from './menu.service';
 import { SeleccionConsumible } from '../modelos/seleccionConsumible.model';
 import { ActivatedRoute, ParamMap } from '@angular/router';
+import { FormNuevoPlatilloComponent } from '../formNuevoPlatillo/formNuevoPlatillo.component';
 
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.css'],
 })
-export class MenuComponent implements OnInit {
+export class MenuComponent implements OnInit, OnDestroy {
   private mode = 'create';
   private idPedido: string = '';
 
@@ -30,6 +32,9 @@ export class MenuComponent implements OnInit {
   pidiendo: boolean = false;
   precioTotal: number = 0;
   isLoading = false;
+  private postsSub: Subscription;
+
+  isEmpleado: boolean = false;
 
   constructor(
     public pedidosService: PedidoService,
@@ -39,6 +44,10 @@ export class MenuComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    if (localStorage.getItem('idEmpleado')) {
+      this.isEmpleado = true;
+    }
+
     moment.locale('es');
     this.inicializarFormGroups();
     this.loadMenu();
@@ -73,11 +82,17 @@ export class MenuComponent implements OnInit {
     });
   }
 
+  ngOnDestroy() {
+    this.postsSub.unsubscribe();
+  }
+
+
   //Metodo para cargar el menu
   loadMenu(): void {
     //Cargamos el arreglo consumibles para el menu
     this.isLoading = true;
-    this.menuService
+    
+      this.menuService
       .getConsumibles()
       .pipe(
         map((consumibleData) => {
@@ -99,6 +114,68 @@ export class MenuComponent implements OnInit {
         this.consumibles = tranformedConsumibles;
       });
   }
+
+  onAddPlatillo(): void {
+    const dialogRef = this.dialog.open(FormNuevoPlatilloComponent, {
+      // Abrimos la ventana emergente para agregar un cliente
+      width: '500px',
+      data: this.consumible,
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      // Despues de cerrarse...
+      console.log('The dialog was closed');
+      if (result) {
+        this.consumible.value.nombre = result.value.nombre;
+        this.consumible.value.ingredientes = result.value.ingredientes;
+        this.consumible.value.imagen = result.value.imagen;
+        this.consumible.value.precio = result.value.precio;
+        this.consumible.value.tipo = result.value.tipo;
+        this.menuService.addNuevoPlatillo(
+          // Registramos el nuevo platillo
+          this.consumible.value.nombre,
+          this.consumible.value.ingredientes,
+          this.consumible.value.imagen,
+          this.consumible.value.precio,
+          this.consumible.value.tipo,
+        );
+      }
+    });
+  }
+
+  // onAddPlatillo(): void {
+  //   const dialogRef = this.dialog.open(FormNuevoPlatilloComponent, {
+  //     // Abrmimos la ventana emergente para agregar un cliente
+  //     width: '500px',
+  //     data: this.consumible,
+  //   });
+
+  //   dialogRef.afterClosed().subscribe((result) => {
+  //     // Despues de cerrarse...
+  //     console.log('The dialog was closed');
+  //     if (result) {
+  //       this.consumible.value.nombre = result.value.nombre;
+  //       this.consumible.value.ingredientes = result.value.ingredientes;
+  //       this.consumible.value.imagen = result.value.imagen;
+  //       this.consumible.value.precio = result.value.precio;
+  //       this.consumible.value.tipo = result.value.tipo;
+  //       this.menuService.addNUevoPlatillo(
+  //         // Registramos el nuevo platillo
+  //         this.consumible.value.nombre,
+  //         this.consumible.value.ingredientes,
+  //         this.consumible.value.imagen,
+  //         this.consumible.value.precio,
+  //         this.consumible.value.tipo,
+  //       );
+
+  //       if (this.isEmpleado === false) {
+  //         this.isEmpleado = true;
+  //       } else {
+  //         this.isEmpleado = false;
+  //       }
+  //     }
+  //   });
+  // }
 
   // Método para agregar un nuevo pedido o modificarlo sea el caso
   onAddPedido() {
@@ -137,6 +214,12 @@ export class MenuComponent implements OnInit {
         });
     }
     this.precioTotal = 0;
+  }
+
+  onDeletePlatillo(post) {
+    this.loadMenu();
+    this.menuService.deletePlatillo(post);
+    this.loadMenu();
   }
 
   // Metodo para poner el menu en modo pedido

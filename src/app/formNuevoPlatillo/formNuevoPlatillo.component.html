@@ -1,0 +1,93 @@
+<form [formGroup]="formConsumible">
+  <h1 mat-dialog-title>Ingresa el nuevo platillo</h1>
+  <div mat-dialog-content>
+    <div class="row">
+      <mat-form-field>
+        <input
+          matInput
+          type="text"
+          name="nombre"
+          formControlName="nombre"
+          placeholder="Nombre"
+        />
+        <mat-error *ngIf="formConsumible.get('nombre').invalid"
+          >Por favor ingrese el nombre del platillo</mat-error
+        >
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <mat-form-field>
+        <input
+          matInput
+          type="text"
+          name="ingredientes"
+          formControlName="ingredientes"
+          placeholder="Ingredientes"
+        />
+        <mat-error *ngIf="formConsumible.get('ingredientes').invalid"
+          >Por favor ingrese los ingredientes del platillo</mat-error
+        >
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <button mat-stroked-button type="button" (click)="filePicker.click()">Selecciona Imagen</button>
+      <input type="file" #filePicker (change)="onImagePicked($event)"/>
+    </div>
+    <div class="image-preview" *ngIf="imagePreview !== '' && imagePreview && formConsumible.get('imagen').valid" class="row">
+      <img [src]="imagePreview" [alt]="formConsumible.value.nombre"/>
+    </div>
+    <div class="row">
+      <mat-form-field>
+        <input
+          matInput
+          type="number"
+          max="1000"
+          min="1"
+          maxlength="5"
+          name="precio"
+          formControlName="precio"
+          placeholder="Precio"
+        />
+        <mat-error *ngIf="formConsumible.get('precio').invalid"
+          >Por favor ingrese el precio</mat-error
+        >
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <mat-form-field appearance="fill">
+        <mat-label>Selecciona el tipo</mat-label>
+        <mat-select [(value)]="tip" formControlName="tipo">
+          <mat-option value="desayuno" name="tipo">Desayuno</mat-option>
+          <mat-option value="comida" name="tipo">Comida</mat-option>
+          <mat-option value="cena" name="tipo">Cena</mat-option>
+          <mat-option value="bebida" name="tipo">Bebida</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <p>{{tip}}</p>
+      <mat-error *ngIf="formConsumible.get('tipo').invalid"
+          >Por favor selecciona un tipo</mat-error
+        >
+    </div>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">No gracias</button>
+    <button
+      *ngIf="formConsumible.get('nombre').invalid || formConsumible.get('ingredientes').invalid || formConsumible.get('imagen').invalid || formConsumible.get('precio').invalid || formConsumible.get('tipo').invalid"
+      mat-button
+      [mat-dialog-close]="formConsumible"
+      cdkFocusInitial
+      disabled="true"
+    >
+      Guardar
+    </button>
+    <button
+      *ngIf="!formConsumible.get('nombre').invalid && !formConsumible.get('ingredientes').invalid && !formConsumible.get('imagen').invalid && !formConsumible.get('precio').invalid && !formConsumible.get('tipo').invalid"
+      mat-button
+      [mat-dialog-close]="formConsumible"
+      cdkFocusInitial
+      disabled="false"
+    >
+      Guardar
+    </button>
+  </div>
+</form>

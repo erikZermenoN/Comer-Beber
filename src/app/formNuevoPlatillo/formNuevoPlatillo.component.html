@@ -1,7 +1,7 @@
 <form [formGroup]="formConsumible">
-  <h1 mat-dialog-title>Ingresa el nuevo platillo</h1>
-  <div mat-dialog-content>
-    <div class="row">
+  <h1 mat-dialog-title>Nuevo platillo</h1>
+  <div mat-dialog-content style="width: 1000px;">
+    <div class="row" style="padding: 15px;">
       <mat-form-field>
         <input
           matInput
@@ -15,7 +15,7 @@
         >
       </mat-form-field>
     </div>
-    <div class="row">
+    <div class="row" style="padding: 10px;">
       <mat-form-field>
         <input
           matInput
@@ -29,14 +29,14 @@
         >
       </mat-form-field>
     </div>
-    <div class="row">
+    <div class="row" style="padding: 10px;">
       <button mat-stroked-button type="button" (click)="filePicker.click()">Selecciona Imagen</button>
       <input type="file" #filePicker (change)="onImagePicked($event)"/>
     </div>
     <div class="image-preview" *ngIf="imagePreview !== '' && imagePreview && formConsumible.get('imagen').valid" class="row">
       <img [src]="imagePreview" [alt]="formConsumible.value.nombre"/>
     </div>
-    <div class="row">
+    <div class="row" style="padding: 10px;">
       <mat-form-field>
         <input
           matInput
@@ -53,9 +53,9 @@
         >
       </mat-form-field>
     </div>
-    <div class="row">
+    <div class="row" style="padding: 10px;">
       <mat-form-field appearance="fill">
-        <mat-label>Selecciona el tipo</mat-label>
+        <mat-label>Tipo</mat-label>
         <mat-select [(value)]="tip" formControlName="tipo">
           <mat-option value="desayuno" name="tipo">Desayuno</mat-option>
           <mat-option value="comida" name="tipo">Comida</mat-option>
@@ -63,14 +63,14 @@
           <mat-option value="bebida" name="tipo">Bebida</mat-option>
         </mat-select>
       </mat-form-field>
-      <p>{{tip}}</p>
+      <!-- <p>{{tip}}</p> -->
       <mat-error *ngIf="formConsumible.get('tipo').invalid"
           >Por favor selecciona un tipo</mat-error
         >
     </div>
   </div>
   <div mat-dialog-actions>
-    <button mat-button (click)="onNoClick()">No gracias</button>
+    <button mat-button (click)="onNoClick()">Cancelar</button>
     <button
       *ngIf="formConsumible.get('nombre').invalid || formConsumible.get('ingredientes').invalid || formConsumible.get('imagen').invalid || formConsumible.get('precio').invalid || formConsumible.get('tipo').invalid"
       mat-button

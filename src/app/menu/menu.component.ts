@@ -118,7 +118,7 @@ export class MenuComponent implements OnInit, OnDestroy {
   onAddPlatillo(): void {
     const dialogRef = this.dialog.open(FormNuevoPlatilloComponent, {
       // Abrimos la ventana emergente para agregar un cliente
-      width: '500px',
+      width: '1000px',
       data: this.consumible,
     });
 
@@ -143,39 +143,25 @@ export class MenuComponent implements OnInit, OnDestroy {
     });
   }
 
-  // onAddPlatillo(): void {
-  //   const dialogRef = this.dialog.open(FormNuevoPlatilloComponent, {
-  //     // Abrmimos la ventana emergente para agregar un cliente
-  //     width: '500px',
-  //     data: this.consumible,
-  //   });
+  onUpdatePlatillo(): void {
+    const dialogRef = this.dialog.open(FormNuevoPlatilloComponent, {
+      // Abrimos la ventana emergente para agregar un cliente
+      width: '1000px',
+      data: this.consumible,
+    });
 
-  //   dialogRef.afterClosed().subscribe((result) => {
-  //     // Despues de cerrarse...
-  //     console.log('The dialog was closed');
-  //     if (result) {
-  //       this.consumible.value.nombre = result.value.nombre;
-  //       this.consumible.value.ingredientes = result.value.ingredientes;
-  //       this.consumible.value.imagen = result.value.imagen;
-  //       this.consumible.value.precio = result.value.precio;
-  //       this.consumible.value.tipo = result.value.tipo;
-  //       this.menuService.addNUevoPlatillo(
-  //         // Registramos el nuevo platillo
-  //         this.consumible.value.nombre,
-  //         this.consumible.value.ingredientes,
-  //         this.consumible.value.imagen,
-  //         this.consumible.value.precio,
-  //         this.consumible.value.tipo,
-  //       );
-
-  //       if (this.isEmpleado === false) {
-  //         this.isEmpleado = true;
-  //       } else {
-  //         this.isEmpleado = false;
-  //       }
-  //     }
-  //   });
-  // }
+    dialogRef.beforeClosed().subscribe((result) => {
+      // Antes de cerrarse...
+      console.log('The dialog was closed');
+      if (result) {
+        this.consumible.value.nombre = result.value.nombre;
+        this.consumible.value.ingredientes = result.value.ingredientes;
+        this.consumible.value.imagen = result.value.imagen;
+        this.consumible.value.precio = result.value.precio;
+        this.consumible.value.tipo = result.value.tipo;
+      }
+    });
+  }
 
   // Método para agregar un nuevo pedido o modificarlo sea el caso
   onAddPedido() {

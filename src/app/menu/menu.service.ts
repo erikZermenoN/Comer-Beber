@@ -65,27 +65,6 @@ export class MenuService {
       `${baseURL}api.consumibles` + _id);
   }
 
-  // getPlatillos() {
-  //   this.http
-  //     .get<{ message: string; platillos: any }>(`${baseURL}api.consumibles`)
-  //     .pipe(map((postData) => {
-  //       return postData.platillos.map(post => {
-  //         return{
-  //           _id: post._id,
-  //           nombre: post.title,
-  //           ingredientes: post.content,
-  //           imagen: post.imagen,
-  //           precio: post.precio,
-  //           tipo: post.tipo,
-  //         }
-  //       });
-  //     }))
-  //     .subscribe((transformedPosts) => {
-  //       this.platillos = transformedPosts;
-  //       this.postsUpdatePlatillo.next([...this.platillos]);
-  //     });
-  // }
-
   getPlatillosUpdateListener() {
     return this.postsUpdatePlatillo.asObservable();
   }
@@ -101,7 +80,7 @@ export class MenuService {
       });
   }
 
-  updatePost(_id:string, nombre: string, ingredientes: string, imagen: File | string, precio: number, tipo: string){
+  updatePlatillo(_id:string, nombre: string, ingredientes: string, imagen: File | string, precio: number, tipo: string){
     let postData: Consumible | FormData;
     if(typeof imagen === "object"){
       postData = new FormData();

@@ -10,7 +10,7 @@
   margin: 0;
 }
 .modal-footer .btn {
-  font-weight: bold;
+  color: white;
 }
 .modal-footer .progress {
   display: none;
@@ -19,7 +19,7 @@
 }
 .input-group-addon {
   color: #fff;
-  background: #d9534f;
+  background: #f44336;
 }
 
 input {

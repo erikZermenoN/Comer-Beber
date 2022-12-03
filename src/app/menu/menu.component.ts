@@ -86,13 +86,12 @@ export class MenuComponent implements OnInit, OnDestroy {
     this.postsSub.unsubscribe();
   }
 
-
   //Metodo para cargar el menu
   loadMenu(): void {
     //Cargamos el arreglo consumibles para el menu
     this.isLoading = true;
-    
-      this.menuService
+
+    this.menuService
       .getConsumibles()
       .pipe(
         map((consumibleData) => {
@@ -143,7 +142,7 @@ export class MenuComponent implements OnInit, OnDestroy {
           this.consumible.value.ingredientes,
           this.consumible.value.imagen,
           this.consumible.value.precio,
-          this.consumible.value.tipo,
+          this.consumible.value.tipo
         );
         location.assign('http://localhost:4200/menu');
       }
@@ -188,7 +187,6 @@ export class MenuComponent implements OnInit, OnDestroy {
 
   // Método para agregar un nuevo pedido o modificarlo sea el caso
   onAddPedido() {
-    console.log('olaaaaaaaaaaaa0');
     if (this.seleccion.length <= 0) {
       alert('Seleccione al menos un platillo o bebida');
       return;
@@ -198,11 +196,9 @@ export class MenuComponent implements OnInit, OnDestroy {
       this.precioTotal += element.precio;
     });
     if (this.mode === 'create') {
-      console.log('olaaaaaaaaaaaa1');
       this.menuService
         .addPedido(moment().format(), this.precioTotal)
         .subscribe((result) => {
-          console.log('olaaaaaaaaaaaa2');
           this.seleccion.forEach((element) => {
             this.menuService.addDetallePedido(element, result.idPedido);
           });

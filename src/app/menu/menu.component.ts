@@ -80,6 +80,13 @@ export class MenuComponent implements OnInit, OnDestroy {
         this.idPedido = '';
       }
     });
+
+    this.postsSub = this.menuService
+      .getPostsUpdateListener()
+      .subscribe((posts: Consumible[]) => {
+        this.isLoading = false;
+        this.consumibles = posts;
+      });
   }
 
   ngOnDestroy() {
@@ -173,7 +180,7 @@ export class MenuComponent implements OnInit, OnDestroy {
         this.consumible.value.tipo = result.value.tipo;
         this.menuService.updatePlatillo(
           // Registramos el nuevo platillo
-          this.consumible.value._id,
+          consumible._id,
           this.consumible.value.nombre,
           this.consumible.value.ingredientes,
           this.consumible.value.imagen,

@@ -64,15 +64,19 @@ export class MenuService {
       `${baseURL}api.consumibles` + _id);
   }
 
+  getPostsUpdateListener() {
+    return this.postsUpdatePlatillo.asObservable();
+  }
+
   getPlatillosUpdateListener() {
     return this.postsUpdatePlatillo.asObservable();
   }
 
-  deletePlatillo(postId: string) {
+  deletePlatillo(_id: string) {
     this.http
-      .delete<{ message: string }>(`${baseURL}api.consumibles/${postId}`)
+      .delete<{ message: string }>(`${baseURL}api.consumibles/${_id}`)
       .subscribe(() => {
-        const updatePlatillos = this.platillos.filter((post) => post._id !== postId);
+        const updatePlatillos = this.platillos.filter((post) => post._id !== _id);
         this.platillos = updatePlatillos;
         this.postsUpdatePlatillo.next([...this.platillos]);
         console.log('Platillo eliminado con exito');
@@ -99,7 +103,7 @@ export class MenuService {
         tipo: tipo,
       };
     }
-    this.http.put("http://localhost:3000/api.consumibles/" + _id, postData)
+    this.http.put(`${baseURL}api.consumibles/${_id}`, postData)
     .subscribe((response) => {
       const updatePlatillo = [...this.platillos];
       const oldPostIndex = updatePlatillo.findIndex((p) => p._id === _id);
@@ -114,9 +118,8 @@ export class MenuService {
       updatePlatillo[oldPostIndex] = platillos;
       this.platillos = updatePlatillo;
       this.postsUpdatePlatillo.next([...this.platillos]);
-      this.router.navigate(["/"]);
-    });
-  }
+     });
+   }
 
   getCliente(id: string) {
     return this.http.get<Cliente>(`${baseURL}api.clientes/` + id);

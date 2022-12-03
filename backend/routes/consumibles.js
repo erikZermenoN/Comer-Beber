@@ -68,7 +68,7 @@ router.put(
       imagen = url + "/images/" + req.file.filename;
     }
     const consumible = new Consumible({
-      _id: req.body.id,
+      _id: req.body._id,
       nombre: req.body.nombre,
       ingredientes: req.body.ingredientes,
       imagen: imagen,

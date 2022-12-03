@@ -116,6 +116,12 @@ export class MenuComponent implements OnInit, OnDestroy {
   }
 
   onAddPlatillo(): void {
+    this.consumible.value.nombre = null;
+    this.consumible.value.ingredientes = null;
+    this.consumible.value.imagen = null;
+    this.consumible.value.precio = null;
+    this.consumible.value.tipo = null;
+
     const dialogRef = this.dialog.open(FormNuevoPlatilloComponent, {
       // Abrimos la ventana emergente para agregar un cliente
       width: '1000px',
@@ -139,18 +145,25 @@ export class MenuComponent implements OnInit, OnDestroy {
           this.consumible.value.precio,
           this.consumible.value.tipo,
         );
+        location.assign('http://localhost:4200/menu');
       }
     });
   }
 
-  onUpdatePlatillo(): void {
+  onUpdatePlatillo(consumible: Consumible): void {
+    this.consumible.value.nombre = consumible.nombre;
+    this.consumible.value.ingredientes = consumible.ingredientes;
+    this.consumible.value.imagen = consumible.imagen;
+    this.consumible.value.precio = consumible.precio;
+    this.consumible.value.tipo = consumible.tipo;
+
     const dialogRef = this.dialog.open(FormNuevoPlatilloComponent, {
       // Abrimos la ventana emergente para agregar un cliente
       width: '1000px',
       data: this.consumible,
     });
 
-    dialogRef.beforeClosed().subscribe((result) => {
+    dialogRef.afterClosed().subscribe((result) => {
       // Antes de cerrarse...
       console.log('The dialog was closed');
       if (result) {
@@ -159,7 +172,17 @@ export class MenuComponent implements OnInit, OnDestroy {
         this.consumible.value.imagen = result.value.imagen;
         this.consumible.value.precio = result.value.precio;
         this.consumible.value.tipo = result.value.tipo;
+        this.menuService.updatePlatillo(
+          // Registramos el nuevo platillo
+          this.consumible.value._id,
+          this.consumible.value.nombre,
+          this.consumible.value.ingredientes,
+          this.consumible.value.imagen,
+          this.consumible.value.precio,
+          this.consumible.value.tipo,
+        );
       }
+      location.assign('http://localhost:4200/menu');
     });
   }
 
@@ -203,9 +226,8 @@ export class MenuComponent implements OnInit, OnDestroy {
   }
 
   onDeletePlatillo(post) {
-    this.loadMenu();
     this.menuService.deletePlatillo(post);
-    this.loadMenu();
+    location.assign('http://localhost:4200/menu');
   }
 
   // Metodo para poner el menu en modo pedido

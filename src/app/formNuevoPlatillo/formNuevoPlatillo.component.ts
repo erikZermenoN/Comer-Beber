@@ -19,6 +19,7 @@ export class FormNuevoPlatilloComponent {
   private mode = 'create';
   private postId: string;
   isLoading = false;
+  isNuevo = false;
 
   constructor(
     public dialogRef: MatDialogRef<FormNuevoPlatilloComponent>,
@@ -26,54 +27,45 @@ export class FormNuevoPlatilloComponent {
   ) {}
 
   ngOnInit(): void {
-    this.formConsumible = new FormGroup({
-      nombre: new FormControl(null, {
-        validators: [Validators.required, Validators.minLength(3)],
-      }),
-      ingredientes: new FormControl(null, {
-        validators: [Validators.required, Validators.minLength(3)],
-      }),
-      imagen: new FormControl(null, {
-        validators: [Validators.required],
-        asyncValidators: [mimeType],
-      }),
-      precio: new FormControl(null, {
-        validators: [Validators.required, Validators.minLength(1)],
-      }),
-      tipo: new FormControl(null, {
-        validators: [Validators.required],
-      }),
-    });
-
-    // this.route.paramMap.subscribe((paramMap: ParamMap) => {
-    //   if(paramMap.has('postId')){
-    //     this.mode = 'edit';
-    //     this.postId = paramMap.get('postId');
-    //     this.isLoading = true;
-    //     this.menuService.getPlatillo(this.postId).subscribe((postData) => {
-    //       this.isLoading = false;
-    //       this.consumible = {
-    //         _id: postData._id, 
-    //         nombre: postData.nombre, 
-    //         ingredientes: postData.ingredientes, 
-    //         imagen: postData.imagen,
-    //         precio: postData.precio, 
-    //         tipo: postData.tipo, 
-    //       };
-    //       this.formConsumible.setValue({
-    //         nombre: this.consumible.nombre,
-    //         ingredientes: this.consumible.ingredientes,
-    //         imagen: this.consumible.imagen,
-    //         precio: this.consumible.precio,
-    //         tipo: this.tip,
-    //       });
-    //       this.imagePreview = this.consumible.imagen as string;
-    //     });
-    //   }else {
-    //     this.mode = 'create';
-    //     this.postId = null;
-    //   }
-    // })
+    if(this.data.value.nombre){
+      this.formConsumible = new FormGroup({
+        nombre: new FormControl(this.data.value.nombre, {
+          validators: [Validators.required, Validators.minLength(3)],
+        }),
+        ingredientes: new FormControl(this.data.value.ingredientes, {
+          validators: [Validators.required, Validators.minLength(3)],
+        }),
+        imagen: new FormControl(this.imagePreview =  this.data.value.imagen, {
+          validators: [Validators.required],
+          asyncValidators: [mimeType],
+        }),
+        precio: new FormControl(this.data.value.precio, {
+          validators: [Validators.required, Validators.minLength(1)],
+        }),
+        tipo: new FormControl(this.data.value.tipo, {
+          validators: [Validators.required],
+        }),
+      });
+    } else {
+      this.formConsumible = new FormGroup({
+        nombre: new FormControl(null, {
+          validators: [Validators.required, Validators.minLength(3)],
+        }),
+        ingredientes: new FormControl(null, {
+          validators: [Validators.required, Validators.minLength(3)],
+        }),
+        imagen: new FormControl(null, {
+          validators: [Validators.required],
+          asyncValidators: [mimeType],
+        }),
+        precio: new FormControl(null, {
+          validators: [Validators.required, Validators.minLength(1)],
+        }),
+        tipo: new FormControl(null, {
+          validators: [Validators.required],
+        }),
+      });
+    }
   }
 
   onImagePicked(event: Event){

@@ -1,13 +1,25 @@
 <div>
+  <section id="inicio" class="d-flex align-items-center" style="width: 100%;">
+    <div
+      class="container position-relative text-center text-lg-start"
+      data-aos="zoom-in"
+      data-aos-delay="100"
+    >
+      <div class="row">
+        <div class="col-lg-9">
+          <h1><span>Comer & Beber</span></h1>
+          <h1>Ménu</h1>
+        </div>
+      </div>
+    </div>
+  </section>
   <div id="titulo" *ngIf="isEmpleado">
-    <h2>Menu</h2>
-    <button mat-stroked-button color="warn" (click)="onAddPlatillo()">
+    <button mat-stroked-button (click)="onAddPlatillo()">
       Nuevo platillo
     </button>
   </div>
   <div id="titulo" *ngIf="!isEmpleado"> 
-    <h2>Menu</h2>
-    <button mat-stroked-button color="warn" (click)="cambioEstadoPedido()">
+    <button mat-stroked-button (click)="cambioEstadoPedido()">
       Arma tu pedido
     </button>
   </div>
@@ -48,7 +60,7 @@
                     <button mat-raised-button color="warn" style="margin-right: 20px;" (click)="onDeletePlatillo(consumible._id)">
                       Eliminar
                     </button>
-                    <button mat-raised-button color="primary" (click)="onAddPlatillo()">
+                    <button mat-raised-button color="primary" (click)="onUpdatePlatillo(consumible)">
                       Modificar
                     </button>
                   </div>
@@ -131,7 +143,7 @@
                     <button mat-raised-button color="warn" style="margin-right: 20px;" (click)="onDeletePlatillo(consumible._id)">
                       Eliminar
                     </button>
-                    <button mat-raised-button color="primary">
+                    <button mat-raised-button color="primary" (click)="onUpdatePlatillo(consumible)">
                       Modificar
                     </button>
                   </div>
@@ -214,7 +226,7 @@
                     <button mat-raised-button color="warn" style="margin-right: 20px;" (click)="onDeletePlatillo(consumible._id)">
                       Eliminar
                     </button>
-                    <button mat-raised-button color="primary">
+                    <button mat-raised-button color="primary" (click)="onUpdatePlatillo(consumible)">
                       Modificar
                     </button>
                   </div>
@@ -297,7 +309,7 @@
                     <button mat-raised-button color="warn" style="margin-right: 20px;" (click)="onDeletePlatillo(consumible._id)">
                       Eliminar
                     </button>
-                    <button mat-raised-button color="primary">
+                    <button mat-raised-button color="primary" (click)="onUpdatePlatillo(consumible)">
                       Modificar
                     </button>
                   </div>

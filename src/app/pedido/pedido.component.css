@@ -22,3 +22,22 @@ mat-spinner {
 #contenidoCard {
   text-align: center;
 }
+
+#inicio {
+  width: 1165;
+  height: 20vh;
+  background: url("../../assets/img/fondos/inicio-fondo.jpg") top center;
+}
+
+#inicio h1 {
+  margin: 0;
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 56px;
+  color: #fff;
+  font-family: "Poppins", sans-serif;
+}
+
+#inicio h1 span {
+  color: #f44336;
+}

@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Subject } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { Cliente } from '../modelos/cliente.model';
 import { Pedido } from '../modelos/pedido.model';
 import { Consumible } from '../modelos/consumible.model';
@@ -80,7 +79,7 @@ export class MenuService {
       });
   }
 
-  updatePlatillo(_id:string, nombre: string, ingredientes: string, imagen: File | string, precio: number, tipo: string){
+  updatePlatillo(_id: string, nombre: string, ingredientes: string, imagen: File | string, precio: number, tipo: string){
     let postData: Consumible | FormData;
     if(typeof imagen === "object"){
       postData = new FormData();

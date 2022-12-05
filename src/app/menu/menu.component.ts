@@ -185,7 +185,7 @@ export class MenuComponent implements OnInit, OnDestroy {
           this.consumible.value.ingredientes,
           this.consumible.value.imagen,
           this.consumible.value.precio,
-          this.consumible.value.tipo,
+          this.consumible.value.tipo
         );
       }
       location.assign('http://localhost:4200/menu');

@@ -22,6 +22,7 @@ import { HeaderComponent } from './header/header.component';
 import { MenuComponent } from './menu/menu.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PedidoComponent } from './pedido/pedido.component';
+import { PedidoEmpleadoComponent } from './pedido_empleado/pedido_empleado.component';
 import { PedidoService } from './pedido/pedido.service';
 import { InicioComponent } from './inicio/inicio.component';
 import { FooterComponent } from './footer/footer.component';
@@ -36,12 +37,13 @@ import { FormNuevoPlatilloComponent } from './formNuevoPlatillo/formNuevoPlatill
     HeaderComponent,
     MenuComponent,
     PedidoComponent,
+    PedidoEmpleadoComponent,
     InicioComponent,
     FooterComponent,
     SidenavComponent,
     FormClienteComponent,
     FormLoginComponent,
-    FormNuevoPlatilloComponent
+    FormNuevoPlatilloComponent,
   ],
   imports: [
     BrowserModule,

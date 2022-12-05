@@ -4,5 +4,7 @@ export interface Pedido {
   idCliente?: string;
   fecha: string;
   precioTotal: number;
+  nombre?: string;
+  mesa?: number;
   consumibles?: Consumible[];
 }

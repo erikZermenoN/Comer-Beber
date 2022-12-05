@@ -25,18 +25,17 @@
           placeholder="Ingredientes"
         />
         <mat-error *ngIf="formConsumible.get('ingredientes').invalid"
-          >Por favor ingrese los ingredientes del platillo</mat-error
-        >
+          >Por favor ingrese los ingredientes del platillo</mat-error>
       </mat-form-field>
     </div>
     <div class="row" style="padding: 10px;">
-      <button mat-stroked-button type="button" (click)="filePicker.click()">Selecciona Imagen</button>
+      <button mat-stroked-button type="button" (click)="filePicker.click()">Selecciona la imagen del platillo</button>
       <input type="file" #filePicker (change)="onImagePicked($event)"/>
     </div>
     <div class="image-preview" *ngIf="imagePreview !== '' && imagePreview && formConsumible.get('imagen').valid" class="row">
       <img [src]="imagePreview" [alt]="formConsumible.value.nombre"/>
     </div>
-    <div class="row" style="padding: 10px;">
+    <div class="row" style="padding: 0px;">
       <mat-form-field>
         <input
           matInput

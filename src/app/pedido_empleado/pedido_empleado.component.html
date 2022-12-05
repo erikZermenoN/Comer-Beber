@@ -1,26 +1,26 @@
-<div *ngIf="pedidos.length > 0" id="pedidos">
+<div *ngIf="pedidos.length" id="pedidos">
   <h1>Pedidos</h1>
-  <div class="container" style="align-self: center;">
+  <div class="container">
     <div class="row" *ngFor="let pedido of pedidos">
       <div class="row" id="encabezadoPedido">
         <div class="col" style="align-self: center;">
-          <h2><b>Nombre: </b>{{ cliente.nombre }}</h2>
+          <h2><b>Nombre: </b>{{ pedido.nombre }}</h2>
         </div>
         <div class="col" style="align-self: center;">
-          <h2><b>No. mesa: </b>{{ cliente.mesa }}</h2>
+          <h2><b>No. mesa: </b>{{ pedido.mesa }}</h2>
         </div>
         <div class="col" style="align-self: center;">
           <h2><b>Total: </b>${{ pedido.precioTotal }}</h2>
         </div>
-        <div class="col" style="align-self: center;">
+        <!-- <div class="col" style="align-self: center;">
           <h2>
-            <a mat-raised-button color="primary" [routerLink]="['/edit', pedido._id]">
+            <a mat-raised-button color="primary" [routerLink]="['/edit', pedido._id]" style="width: 100px;">
               EDITAR
             </a>
           </h2>
-        </div>
+        </div> -->
         <div class="col" style="align-self: center;">
-          <button mat-raised-button color="warn" (click)="onDelete(pedido._id)">
+          <button mat-raised-button color="warn" (click)="onDelete(pedido._id)" style="width: 100px;">
             ELIMINAR
           </button>
         </div>

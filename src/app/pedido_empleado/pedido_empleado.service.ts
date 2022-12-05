@@ -9,7 +9,7 @@ import { SeleccionConsumible } from '../modelos/seleccionConsumible.model';
 const baseURL: string = 'http://localhost:3000/';
 
 @Injectable({ providedIn: 'root' })
-export class PedidoService {
+export class PedidoEmpleadoService {
   private pedidos: Pedido[] = []; //Primera matriz
   private pedidosAct = new Subject<Pedido[]>();
   constructor(private http: HttpClient) {}
@@ -20,7 +20,6 @@ export class PedidoService {
       `${baseURL}api.pedidos/cliente/${idCliente}`
     );
   }
-
   
   getPedidosEmpleado() {
     return this.http.get<{ message: string; pedidos: Pedido[] }>(
@@ -28,8 +27,7 @@ export class PedidoService {
     );
   }
 
-  getCliente() {
-    const idCliente: string = localStorage.getItem('idCliente') || '';
+  getCliente(idCliente: string) {
     return this.http.get<Cliente>(`${baseURL}api.clientes/${idCliente}`);
   }
 

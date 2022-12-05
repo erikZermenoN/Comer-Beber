@@ -26,7 +26,17 @@
             </li>
           </mat-list-item>
         </div>
-        <div>
+        <div *ngIf="isEmpleado">
+          <mat-list-item style="margin-top: 70px">
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/pedidos_empleado">
+                <i class="material-icons" style="color: white">reorder</i>
+                <p style="color: white">Mis pedidos</p>
+              </a>
+            </li>
+          </mat-list-item>
+        </div>
+        <div *ngIf="!isEmpleado">
           <mat-list-item style="margin-top: 70px">
             <li class="nav-item">
               <a class="nav-link" routerLink="/pedidos">

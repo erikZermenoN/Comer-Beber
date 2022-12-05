@@ -18,3 +18,7 @@ input {
 .image-preview img {
   height: 100%;
 }
+
+input[type="file"]{
+  visibility: hidden;
+}

@@ -2,6 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { FormLoginComponent } from '../formLogin/formLogin.component';
 import { MatDialog } from '@angular/material/dialog';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-sidenav',
@@ -51,6 +52,26 @@ export class SidenavComponent {
 
   cerrarSesion(): void {
     localStorage.removeItem('idEmpleado');
+    this.correct.fire({
+      icon: 'success',
+      title: 'Sesión cerrada exitosamente',
+    });
+    setTimeout(this.recargar, 1500);
+  }
+
+  correct = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 1500,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.addEventListener('mouseenter', Swal.stopTimer);
+      toast.addEventListener('mouseleave', Swal.resumeTimer);
+    },
+  });
+
+  recargar(): void {
     location.assign('http://localhost:4200');
   }
 }

@@ -15,7 +15,7 @@ export class PedidoEmpleadoComponent implements OnInit {
   pedidos: Pedido[] = [];
   consumibles: Consumible[] = [];
   cliente: Cliente = {};
-  clientes: Cliente [] = []
+  clientes: Cliente[] = [];
   isLoading = false;
   isEmpleado = true;
 
@@ -26,40 +26,40 @@ export class PedidoEmpleadoComponent implements OnInit {
     this.isLoading = true;
     if (this.isEmpleado) {
       this.pedido_empleadoService.getPedidosEmpleado().subscribe((result) => {
-        //console.log(result.pedidos.length, result.pedidos);
         result.pedidos.forEach((element) => {
           this.pedido_empleadoService
             .getDetallePedidosByPedido(element._id)
             .subscribe((pedido) => {
-              //console.log(pedido);
-              pedido.detallePedidos.forEach((detallePedido) => {
-                this.pedido_empleadoService
-                  .getConsumible(detallePedido.idConsumible)
-                  .subscribe((consumible) => {
-                    this.consumibles.push(consumible);
-                    cont++;
-                      if (cont === pedido.detallePedidos.length) {
-                        
-                        const pedido1: Pedido = {
-                          _id: element._id,
-                          idCliente: element.idCliente,
-                          fecha: element.fecha,
-                          precioTotal: element.precioTotal,
-                          // nombre: result.nombre,
-                          // mesa: result.mesa,
-                          consumibles: this.consumibles,
-                        };
-                        this.pedidos.push(pedido1);
-                        this.consumibles = [];
-                        cont = 0;
-                        
-                    }
+              this.pedido_empleadoService
+                .getCliente(element.idCliente)
+                .subscribe((cliente) => {
+                  //console.log(pedido);
+                  pedido.detallePedidos.forEach((detallePedido) => {
+                    this.pedido_empleadoService
+                      .getConsumible(detallePedido.idConsumible)
+                      .subscribe((consumible) => {
+                        this.consumibles.push(consumible);
+                        cont++;
+                        if (cont === pedido.detallePedidos.length) {
+                          const pedido1: Pedido = {
+                            _id: element._id,
+                            idCliente: element.idCliente,
+                            fecha: element.fecha,
+                            precioTotal: element.precioTotal,
+                            nombre: cliente.nombre,
+                            mesa: cliente.mesa,
+                            consumibles: this.consumibles,
+                          };
+                          this.pedidos.push(pedido1);
+                          this.consumibles = [];
+                          cont = 0;
+                        }
+                      });
                   });
-              });
+                });
             });
         });
         this.isLoading = false;
-        console.log(this.clientes)
       });
     } else {
       this.isLoading = false;
